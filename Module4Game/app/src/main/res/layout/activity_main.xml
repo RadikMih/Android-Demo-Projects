@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <android.support.v7.widget.GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="match_parent"
+        android:layout_height="389dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/board"
+        app:columnCount="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rowCount="3">
+
+        <ImageView
+            android:id="@+id/cell_00"
+            android:layout_width="115dp"
+            android:layout_height="115dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            app:layout_column="0"
+            app:layout_row="0"
+            android:onClick="dropIn"
+            android:tag="0"/>
+
+        <ImageView
+            android:id="@+id/cell_01"
+            android:layout_width="115dp"
+            android:layout_height="115dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginTop="5dp"
+            app:layout_column="1"
+            app:layout_row="0"
+            android:onClick="dropIn"
+            android:tag="1"/>
+
+        <ImageView
+            android:id="@+id/cell_02"
+            android:layout_width="115dp"
+            android:layout_height="115dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="5dp"
+            app:layout_column="2"
+            app:layout_row="0"
+            android:onClick="dropIn"
+            android:tag="2"/>
+
+        <ImageView
+            android:id="@+id/cell_12"
+            android:layout_width="115dp"
+            android:layout_height="115dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginTop="18dp"
+            app:layout_column="2"
+            app:layout_row="1"
+            android:onClick="dropIn"
+            android:tag="5"/>
+
+        <ImageView
+            android:id="@+id/cell_11"
+            android:layout_width="115dp"
+            android:layout_height="115dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginTop="18dp"
+            android:onClick="dropIn"
+            app:layout_column="1"
+            app:layout_row="1"
+            android:tag="4"/>
+
+        <ImageView
+            android:id="@+id/cell_10"
+            android:layout_width="115dp"
+            android:layout_height="115dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="18dp"
+            app:layout_column="0"
+            app:layout_row="1"
+            android:onClick="dropIn"
+            android:tag="3"/>
+
+        <ImageView
+            android:id="@+id/cell_20"
+            android:layout_width="115dp"
+            android:layout_height="115dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="20dp"
+            app:layout_column="0"
+            app:layout_row="2"
+            android:onClick="dropIn"
+            android:tag="6"/>
+
+        <ImageView
+            android:id="@+id/cell_21"
+            android:layout_width="115dp"
+            android:layout_height="115dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginTop="20dp"
+            app:layout_column="1"
+            app:layout_row="2"
+            android:onClick="dropIn"
+            android:tag="7"/>
+
+        <ImageView
+            android:id="@+id/cell_22"
+            android:layout_width="115dp"
+            android:layout_height="115dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginTop="20dp"
+            app:layout_column="2"
+            app:layout_row="2"
+            android:onClick="dropIn"
+            android:tag="8"/>
+
+    </android.support.v7.widget.GridLayout>
+
+    <LinearLayout
+        android:id="@+id/playAgainLayout"
+        android:layout_width="408dp"
+        android:layout_height="127dp"
+        android:background="@android:color/holo_orange_light"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/winnerMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:text="Winner:"
+            android:textAlignment="center"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/buttonPlayAgain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:onClick="playAgain"
+            android:text="Play Again"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

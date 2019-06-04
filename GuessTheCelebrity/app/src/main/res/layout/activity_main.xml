@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="345dp"
+        android:layout_marginBottom="20dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/holo_blue_bright" />
+
+    <Button
+        android:id="@+id/button0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="celebChosen"
+        android:padding="10sp"
+        android:tag="0"
+        android:text=""
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="celebChosen"
+        android:padding="10sp"
+        android:tag="1"
+        android:text=""
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="celebChosen"
+        android:padding="10sp"
+        android:tag="2"
+        android:text=""
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="celebChosen"
+        android:padding="10sp"
+        android:tag="3"
+        android:text=""
+        android:textSize="24sp" />
+
+</LinearLayout>

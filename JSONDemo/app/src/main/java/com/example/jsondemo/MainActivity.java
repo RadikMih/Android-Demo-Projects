@@ -5,8 +5,6 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,7 +16,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Iterator;
 
 public class MainActivity extends Activity {
 

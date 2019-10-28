@@ -4,7 +4,7 @@ import android.os.CountDownTimer;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void generateQuestion() {
         Random random = new Random();
-
         int a = random.nextInt(21);
         int b = random.nextInt(21);
 
@@ -68,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void chooseAnswer(View view) {
+        Log.i("Tag", view.getTag().toString());
+
         if (view.getTag().toString().equals(Integer.toString(locationOfCorrectAnswer))) {
             score++;
             resultTextView.setText("Correct");
@@ -88,12 +89,11 @@ public class MainActivity extends AppCompatActivity {
         resultTextView.setText("");
         playAgainButton.setVisibility(View.INVISIBLE);
         generateQuestion();
-        new CountDownTimer(30100, 1000) {
 
+        new CountDownTimer(30100, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timerTextView.setText(millisUntilFinished / 1000 + " s");
-
             }
 
             @Override
@@ -120,7 +120,5 @@ public class MainActivity extends AppCompatActivity {
         button3 = findViewById(R.id.button3);
         playAgainButton = findViewById(R.id.playAgainButton);
         gameLayout = findViewById(R.id.gameLayout);
-
-
     }
 }

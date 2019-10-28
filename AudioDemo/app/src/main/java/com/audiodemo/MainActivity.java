@@ -34,25 +34,20 @@ public class MainActivity extends AppCompatActivity {
         volumeControl.setMax(maxVolume);
         volumeControl.setProgress(currentVolume);
 
-
-
-
         volumeControl.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                //Log.i("SeekBar value", progress + "");
+                Log.i("SeekBar value", progress + "");
                 audioManager.setStreamVolume(audioManager.STREAM_MUSIC, progress, 0);
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
             }
         });
 
@@ -84,20 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 mplayer.start();
             }
         });
-
-
-
-
     }
-
-
-
-
-
-
-
-
-
 
     public void playMusic(View view){
         mplayer.start();
@@ -106,10 +88,4 @@ public class MainActivity extends AppCompatActivity {
     public void pauseMusic(View view) {
         mplayer.pause();
     }
-
-
-
-
-
-
 }

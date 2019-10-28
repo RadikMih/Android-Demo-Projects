@@ -40,6 +40,5 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("Done", "Countdown Timer Finished");
             }
         }.start();
-
     }
 }

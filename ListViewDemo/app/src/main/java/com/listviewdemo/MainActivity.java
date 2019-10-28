@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                // parent.setVisibility(View.GONE);
-               //  the item that is tapped
+               //  the item that is tapped - view
                // position of the row
                 String name = names.get(position);
                 Log.i("Name: ", name);

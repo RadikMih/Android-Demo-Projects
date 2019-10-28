@@ -18,7 +18,8 @@ public class MainActivity extends AppCompatActivity {
         int id = view.getId();
         String ourID = view.getResources().getResourceEntryName(id);
 
-        int resourceID = getResources().getIdentifier(ourID, "raw", "com.gridlayoutdemo");
+        int resourceID = getResources().
+                getIdentifier(ourID, "raw", "com.gridlayoutdemo");
 
         MediaPlayer mplayer = MediaPlayer.create(this, resourceID);
         mplayer.start();

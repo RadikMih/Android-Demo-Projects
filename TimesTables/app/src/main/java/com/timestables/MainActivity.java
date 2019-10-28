@@ -34,21 +34,22 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     timesTable = progress;
                 }
+
+                Log.i("SeekBar value", Integer.toString(timesTable));
+
                 generateTimesTable(timesTable);
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
             }
         });
 
-        generateTimesTable(10);
+     //   generateTimesTable(10);
     }
 
     public void generateTimesTable(int timesTable) {

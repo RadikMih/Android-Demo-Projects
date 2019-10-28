@@ -36,12 +36,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
             }
         });
 
@@ -83,12 +81,11 @@ public class MainActivity extends AppCompatActivity {
     public void updateTimer(int secondsLeft) {
         int minutes = secondsLeft / 60;
         int seconds = secondsLeft - minutes * 60;
-
         String minutesString = Integer.toString(minutes);
+
         if (minutes < 10) {
             minutesString = "0" + minutesString;
         }
-
 
         String secondsString = Integer.toString(seconds);
         if (seconds < 10) {
@@ -97,5 +94,4 @@ public class MainActivity extends AppCompatActivity {
 
         timerTextView.setText(minutesString + ":" + secondsString);
     }
-
 }

@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void clickFunction(View view) {
         Log.i("Test", "Button is clicked");
-        ImageView imageView = findViewById(R.id.carImageView);
+        ImageView imageView = findViewById(R.id.car);
         imageView.setImageResource(R.drawable.maxresdefault);
 //        EditText enterNameField = findViewById(R.id.enterNameField);
 //        EditText usernameField = findViewById(R.id.UsernameField);
@@ -42,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
 
     public double convertMoney(double amount) {
         return amount * 2.0;
+    }
+
+    public void fade(View view) {
+        ImageView image = findViewById(R.id.car);
+        ImageView car2 = findViewById(R.id.car2);
+
+        image.animate().alpha(0f).setDuration(2000);
+        car2.animate().alpha(1f).setDuration(2000);
     }
 
 }

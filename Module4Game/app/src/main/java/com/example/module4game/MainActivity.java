@@ -13,9 +13,9 @@ public class MainActivity extends AppCompatActivity {
     int activePlayer = 0;
     boolean gameActive = true;
 
-    // 2 = not played
+    // 2 = not played yet
     int[] cells = {2, 2, 2, 2, 2, 2, 2, 2, 2};
-    int[][] winning = {
+    int[][] winningPossitions = {
             {0, 1, 2}, {3, 4, 5}, {6, 7, 8},
             {0, 3, 6}, {1, 4, 7}, {2, 5, 8},
             {0, 4, 8}, {2, 4, 6}};
@@ -32,8 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (cells[tappedCounter] == 2 && gameActive) {
             cells[tappedCounter] = activePlayer;
-
-            counter.setTranslationY(-1000);
+            counter.setTranslationY(-1000f);
 
             if (activePlayer == 0) {
                 counter.setImageResource(R.drawable.yellow);
@@ -44,8 +43,9 @@ public class MainActivity extends AppCompatActivity {
             }
             counter.animate().translationYBy(1000).rotation(270).setDuration(300);
 
-            for (int[] position : winning) {
-                if (cells[position[0]] == cells[position[1]] && cells[position[1]] == cells[position[2]] &&
+            for (int[] position : winningPossitions) {
+                if (cells[position[0]] == cells[position[1]] &&
+                        cells[position[1]] == cells[position[2]] &&
                         cells[position[0]] != 2) {
                     gameActive = false;
 

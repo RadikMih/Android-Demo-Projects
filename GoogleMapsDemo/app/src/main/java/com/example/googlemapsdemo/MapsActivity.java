@@ -28,7 +28,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    /**   42.672534,23.3340661
+    /**   42.657121,23.3824383
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
      * This is where we can add markers or lines, add listeners or move the camera. In this case,
@@ -44,7 +44,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 
         // Add a marker in Sydney and move the camera
-        LatLng sofia = new LatLng(42.672534, 23.3340661);
+        LatLng sofia = new LatLng(42.657121, 23.3824383);
         mMap.addMarker(new MarkerOptions().position(sofia).title("Marker in Sofia")
         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 

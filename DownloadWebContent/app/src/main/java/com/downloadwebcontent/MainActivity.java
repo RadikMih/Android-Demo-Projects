@@ -14,11 +14,8 @@ import java.util.concurrent.ExecutionException;
 public class MainActivity extends AppCompatActivity {
 
     public class DownloadTask extends AsyncTask<String, Void, String> {
-
-
         @Override
         protected String doInBackground(String... urls) {
-
             String result = "";
             URL url;
             HttpURLConnection urlConnection = null;
@@ -31,15 +28,14 @@ public class MainActivity extends AppCompatActivity {
                 int data = reader.read();
 
                 while(data != -1) {
-                    char current = (char) data;
+                    char current = (char)data;
                     result += current;
                     data = reader.read();
                 }
-
                 return result;
 
             } catch (Exception e) {
-                e.printStackTrace();
+               e.printStackTrace();
                 return "failed";
             }
         }
@@ -61,6 +57,4 @@ public class MainActivity extends AppCompatActivity {
         }
         Log.i("Result", result);
     }
-
-
 }

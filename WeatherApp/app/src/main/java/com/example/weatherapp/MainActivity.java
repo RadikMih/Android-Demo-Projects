@@ -31,26 +31,19 @@ public class MainActivity extends Activity {
 
         Log.i("cityName", cityName.getText().toString());
 
+        // hiding keyboard ofter the button is clicked;
         InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mgr.hideSoftInputFromWindow(cityName.getWindowToken(), 0);
 
         try {
             String encodedCityName = URLEncoder.encode(cityName.getText().toString(), "UTF-8");
-
             DownloadTask task = new DownloadTask();
             task.execute("http://api.openweathermap.org/data/2.5/weather?q=" + encodedCityName + "&APPID=845e9e3b44456f0580da558a69b19180");
 
-
-        } catch (UnsupportedEncodingException e) {
-
+        } catch (Exception e) {
             e.printStackTrace();
-
             Toast.makeText(getApplicationContext(), "Could not find weather", Toast.LENGTH_LONG).show();
-
         }
-
-
-
     }
 
     @Override
@@ -58,15 +51,11 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
         cityName = (EditText) findViewById(R.id.cityName);
         resultTextView = (TextView) findViewById(R.id.resultTextView);
-
     }
 
-
-     class DownloadTask extends AsyncTask<String, Void, String> {
+    class DownloadTask extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... urls) {
@@ -77,31 +66,20 @@ public class MainActivity extends Activity {
 
             try {
                 url = new URL(urls[0]);
-
                 urlConnection = (HttpURLConnection) url.openConnection();
-
                 InputStream in = urlConnection.getInputStream();
-
                 InputStreamReader reader = new InputStreamReader(in);
-
                 int data = reader.read();
 
                 while (data != -1) {
-
                     char current = (char) data;
-
                     result += current;
-
                     data = reader.read();
-
                 }
-
                 return result;
 
             } catch (Exception e) {
-
-              //  Toast.makeText(getApplicationContext(), "Could not find weather", Toast.LENGTH_LONG).show();
-
+              //Toast.makeText(getApplicationContext(), "Could not find weather", Toast.LENGTH_LONG).show();
             }
 
             return null;
@@ -112,21 +90,15 @@ public class MainActivity extends Activity {
             super.onPostExecute(s);
 
             try {
-
                 String message = "";
-
                 JSONObject jsonObject = new JSONObject(s);
-
                 String weatherInfo = jsonObject.getString("weather");
-
                 Log.i("Weather content", weatherInfo);
-
                 JSONArray arr = new JSONArray(weatherInfo);
 
                 for (int i = 0; i < arr.length(); i++) {
 
                     JSONObject jsonPart = arr.getJSONObject(i);
-
                     String main = "";
                     String description = "";
 
@@ -134,32 +106,18 @@ public class MainActivity extends Activity {
                     description = jsonPart.getString("description");
 
                     if (main != "" && description != "") {
-
                         message += main + ": " + description + "\r\n";
-
                     }
-
                 }
 
                 if (message != "") {
-
                     resultTextView.setText(message);
-
                 } else {
-
                     Toast.makeText(getApplicationContext(), "Could not find weather", Toast.LENGTH_LONG).show();
-
                 }
-
-
-            } catch (JSONException e) {
-
+            } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), "Could not find weather", Toast.LENGTH_LONG).show();
-
             }
-
-
-
         }
     }
 }

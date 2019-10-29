@@ -25,7 +25,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         DownloadTask task = new DownloadTask();
-        task.execute("https://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=b6907d289e10d714a6e88b30761fae22");
+        task.execute("http://api.openweathermap.org/data/2.5/weather?q=Sofia&APPID=845e9e3b44456f0580da558a69b19180");
     }
 
     public class DownloadTask extends AsyncTask<String, Void, String> {
@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
 
             String result = "";
             URL url;
-            HttpURLConnection urlConnection = null;
+            HttpURLConnection urlConnection;
 
             try {
                 url = new URL(urls[0]);
@@ -45,13 +45,10 @@ public class MainActivity extends Activity {
                 int data = reader.read();
 
                 while (data != -1) {
-
                     char current = (char) data;
                     result += current;
                     data = reader.read();
-
                 }
-
                 return result;
 
             } catch (MalformedURLException e) {
@@ -74,7 +71,6 @@ public class MainActivity extends Activity {
                 JSONArray arr = new JSONArray(weatherInfo);
 
                 for (int i = 0; i < arr.length(); i++) {
-
                     JSONObject jsonPart = arr.getJSONObject(i);
                     Log.i("main", jsonPart.getString("main"));
                     Log.i("description", jsonPart.getString("description"));

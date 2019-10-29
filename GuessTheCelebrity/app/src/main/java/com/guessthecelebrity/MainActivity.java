@@ -42,12 +42,87 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "Wrong! It was " + celebName.get(chosenCeleb), Toast.LENGTH_SHORT).show();
         }
-
         createNewQuestion();
     }
 
-    public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
+        imageView = findViewById(R.id.imageView);
+        button0 = findViewById(R.id.button0);
+        button1 = findViewById(R.id.button1);
+        button2 = findViewById(R.id.button2);
+        button3 = findViewById(R.id.button3);
+
+        DownloadTask task = new DownloadTask();
+        String result;
+
+        try {
+            result = task.execute("http://www.posh24.se/kandisar").get();
+            String[] splitResult = result.split("<div class=\"sidebarContainer\">");
+
+
+            Pattern pattern = Pattern.compile("<img src=\"(.*?)\"");
+            Matcher matcher = pattern.matcher(splitResult[0]);
+
+            while (matcher.find()) {
+                celebURLs.add(matcher.group(1));
+            }
+
+            pattern = Pattern.compile("alt=\"(.*?)\"");
+            matcher = pattern.matcher(splitResult[0]);
+
+            while (matcher.find()) {
+                celebName.add(matcher.group(1));
+            }
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        createNewQuestion();
+    }
+
+    public void createNewQuestion() {
+        Random random = new Random();
+        chosenCeleb = random.nextInt(celebURLs.size());
+
+        ImageDownloader imageTask = new ImageDownloader();
+        Bitmap celebImage;
+        try {
+            celebImage = imageTask.execute(celebURLs.get(chosenCeleb)).get();
+
+            imageView.setImageBitmap(celebImage);
+            correctAnswerPosition = random.nextInt(4);
+            int incorrectPosition;
+            for (int i = 0; i < 4; i++) {
+                if (i == correctAnswerPosition) {
+                    answers[i] = celebName.get(chosenCeleb);
+                } else {
+                    incorrectPosition = random.nextInt(celebURLs.size());
+
+                    while (incorrectPosition == correctAnswerPosition) {
+                        incorrectPosition = random.nextInt(celebURLs.size());
+                    }
+
+                    answers[i] = celebName.get(incorrectPosition);
+                }
+            }
+
+            button0.setText(answers[0]);
+            button1.setText(answers[1]);
+            button2.setText(answers[2]);
+            button3.setText(answers[3]);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
         @Override
         protected Bitmap doInBackground(String... urls) {
             try {
@@ -67,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public class DownloadTask extends AsyncTask<String, Void, String> {
-
         @Override
         protected String doInBackground(String... params) {
             String result = "";
@@ -92,88 +166,5 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
-    }
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        imageView = findViewById(R.id.imageView);
-        button0 = findViewById(R.id.button0);
-        button1 = findViewById(R.id.button1);
-        button2 = findViewById(R.id.button2);
-        button3 = findViewById(R.id.button3);
-
-        DownloadTask task = new DownloadTask();
-        String result;
-
-        try {
-            result = task.execute("http://www.posh24.se/kandisar").get();
-            String[] splitResult = result.split("<div class=\"sidebarContainer\">");
-
-            Pattern pattern = Pattern.compile("<img src\"(.*?)\"");
-            Matcher matcher = pattern.matcher(splitResult[0]);
-
-            while (matcher.find()) {
-                // celebURLs.add(matcher.group(1));
-            }
-
-            pattern = Pattern.compile("alt=\"(.*?)\"");
-            matcher = pattern.matcher(splitResult[0]);
-
-            while (matcher.find()) {
-                // celebName.add(matcher.group(1));
-            }
-
-
-
-
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        createNewQuestion();
-    }
-
-    public void createNewQuestion() {
-        Random random = new Random();
-        //celebURLs.size
-        chosenCeleb = random.nextInt((50));
-
-        ImageDownloader imageTask = new ImageDownloader();
-        Bitmap celebImage;
-        try {
-            celebImage = imageTask.execute(celebURLs.get(chosenCeleb)).get();
-
-            imageView.setImageBitmap(celebImage);
-            correctAnswerPosition = random.nextInt(4);
-            int incorrectPosition;
-            for (int i = 0; i < 4; i++) {
-                if (i == correctAnswerPosition) {
-                    answers[i] = celebName.get(chosenCeleb);
-                } else {
-                    incorrectPosition = random.nextInt(50);
-
-                    while (incorrectPosition == correctAnswerPosition) {
-                        incorrectPosition = random.nextInt(50);
-                    }
-
-                    answers[i] = celebName.get(incorrectPosition);
-                }
-            }
-
-            button0.setText(answers[0]);
-            button1.setText(answers[1]);
-            button2.setText(answers[2]);
-            button3.setText(answers[3]);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
     }
 }

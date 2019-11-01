@@ -54,8 +54,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         changeSignUpModeTextView = findViewById(R.id.changeSignupModeTextView);
         changeSignUpModeTextView.setOnClickListener(this);
-        passwordEditText = findViewById(R.id.passwordEditText);
 
+
+
+
+        passwordEditText = findViewById(R.id.passwordEditText);
         passwordEditText.setOnKeyListener(this);
 
     }

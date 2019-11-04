@@ -22,9 +22,7 @@ public class StarterApplication extends Application {
 
         // Add your initialization code here
         Parse.initialize(new Parse.Configuration.Builder(getApplicationContext())
-                .applicationId("")
-                .clientKey("")
-                .server("")
+
                 .build()
         );
 
@@ -36,9 +34,10 @@ public class StarterApplication extends Application {
             @Override
             public void done(ParseException ex) {
                 if (ex == null) {
-                    Log.i("Parse Result", "Successful!");
+                    Log.i("===== Parse Result", "Successful!");
                 } else {
-                    Log.i("Parse Result", "Failed" + ex.toString());
+                    ex.printStackTrace();
+                    Log.i("===== Parse Result", "Failed " + ex.toString());
                 }
             }
         });

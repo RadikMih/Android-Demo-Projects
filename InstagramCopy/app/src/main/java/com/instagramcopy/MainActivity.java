@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.parse.ParseAnalytics;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnKeyListener {
 
     Boolean signUpModeActive = true;
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
         changeSignUpModeTextView = findViewById(R.id.changeSignupModeTextView);
         changeSignUpModeTextView.setOnClickListener(this);

@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView changeSignUpModeTextView;
     EditText passwordEditText;
 
+
     public void showUserList() {
         Intent intent = new Intent(getApplicationContext(), UserListActivity.class);
         startActivity(intent);
@@ -139,4 +140,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return false;
     }
+
 }

@@ -1,10 +1,10 @@
 package com.instagramapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethod;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +26,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Boolean signUpModeActive = true;
     TextView changeSignUpModeTextView;
     EditText passwordEditText;
-    
+
+    public void showUserList() {
+        Intent intent = new Intent(getApplicationContext(), UserListActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +48,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         ImageView logoImageView = findViewById(R.id.logoImageView);
         logoImageView.setOnClickListener(this);
+
+        if (ParseUser.getCurrentUser() != null) {
+            showUserList();
+        }
 
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
     }
@@ -69,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void done(ParseException e) {
                         if (e == null) {
                             Log.i("Sign Up", "Successful");
+                            showUserList();
                         } else {
                             Toast.makeText(MainActivity.this,
                                     e.getMessage(),
@@ -84,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void done(ParseUser user, ParseException e) {
                         if (user != null) {
                             Log.i("Sign Up", "Login Successful");
+                            showUserList();
                         } else {
                             Toast.makeText(MainActivity.this,
                                     e.getMessage(),

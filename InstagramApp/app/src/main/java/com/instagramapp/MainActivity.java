@@ -4,12 +4,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethod;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.parse.LogInCallback;
 import com.parse.ParseAnalytics;
@@ -22,9 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Boolean signUpModeActive = true;
     TextView changeSignUpModeTextView;
     EditText passwordEditText;
-
-
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +37,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         passwordEditText = findViewById(R.id.passwordEditText);
         passwordEditText.setOnKeyListener(this);
+
+        ConstraintLayout backgroundLayout = findViewById(R.id.backgroundLayout);
+        backgroundLayout.setOnClickListener(this);
+
+        ImageView logoImageView = findViewById(R.id.logoImageView);
+        logoImageView.setOnClickListener(this);
 
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
     }
@@ -90,7 +98,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.changeSignupModeTextView) {
+        int viewID = view.getId();
+
+        if (viewID == R.id.changeSignupModeTextView) {
             Button singUpButton = findViewById(R.id.signUpButton);
             Log.i("AppInfo", "Change SignUp Mode");
             if (signUpModeActive) {
@@ -101,6 +111,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 signUpModeActive = true;
                 singUpButton.setText("Sign Up");
                 changeSignUpModeTextView.setText("or Log In");
+            }
+
+        } else if (viewID == R.id.backgroundLayout || viewID == R.id.logoImageView) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            if (inputMethodManager != null && getCurrentFocus() != null) {
+                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
             }
         }
     }

@@ -21,11 +21,13 @@ import java.util.List;
 
 public class UserFeedActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_feed);
         final LinearLayout linearLayout = findViewById(R.id.linearLayout);
+
         Intent intent = getIntent();
         String activeUsername = intent.getStringExtra("username");
         setTitle(activeUsername + "'s Feed");
@@ -56,6 +58,8 @@ public class UserFeedActivity extends AppCompatActivity {
                                         ));
 
                                         imageView.setImageBitmap(bitmap);
+                                        imageView.setPadding(0, 0, 0, 15);
+
                                         linearLayout.addView(imageView);
                                     }
                                 }

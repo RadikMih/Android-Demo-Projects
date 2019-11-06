@@ -69,6 +69,11 @@ public class UserListActivity extends AppCompatActivity {
             } else {
                 getPhoto();
             }
+        } else if (item.getItemId() == R.id.logout) {
+            ParseUser.logOut();
+
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -94,19 +99,19 @@ public class UserListActivity extends AppCompatActivity {
                 object.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                       if (e == null) {
-                           Toast.makeText(
-                                   UserListActivity.this,
-                                   "Image Shared!",
-                                   Toast.LENGTH_LONG)
-                                   .show();
-                       } else {
-                           Toast.makeText(
-                                   UserListActivity.this,
-                                   "Image could not be shared - please try again later",
-                                   Toast.LENGTH_LONG)
-                                   .show();
-                       }
+                        if (e == null) {
+                            Toast.makeText(
+                                    UserListActivity.this,
+                                    "Image Shared!",
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        } else {
+                            Toast.makeText(
+                                    UserListActivity.this,
+                                    "Image could not be shared - please try again later",
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
                     }
                 });
 
@@ -121,6 +126,7 @@ public class UserListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list);
 
+        setTitle("User Feed");
         final ArrayList<String> usernames = new ArrayList<>();
         final ListView userListView = findViewById(R.id.userListView);
 

@@ -8,10 +8,10 @@
 
     <ImageView
         android:id="@+id/LogoImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="253dp"
+        android:layout_height="226dp"
         android:layout_marginStart="92dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="70dp"
         android:layout_marginEnd="92dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,28 +25,30 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/textView"
+        app:layout_constraintEnd_toStartOf="@+id/driverTextView"
         app:layout_constraintHorizontal_bias="0.45"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/riderTextView"
         app:layout_constraintTop_toBottomOf="@+id/LogoImageView" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/riderTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="56dp"
-        android:text="TextView"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="48dp"
+        android:text="Rider"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LogoImageView" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/driverTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="104dp"
-        android:text="TextView"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="100dp"
+        android:text="Driver"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LogoImageView" />
 
@@ -55,6 +57,7 @@
         android:layout_width="115dp"
         android:layout_height="0dp"
         android:layout_marginTop="32dp"
+        android:onClick="getStarted"
         android:text="GET STARTED"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

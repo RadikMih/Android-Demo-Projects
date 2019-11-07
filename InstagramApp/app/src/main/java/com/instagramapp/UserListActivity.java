@@ -141,7 +141,7 @@ public class UserListActivity extends AppCompatActivity {
 
 
         final ArrayAdapter arrayAdapter =
-                new ArrayAdapter(this, android.R.layout.simple_list_item_1, usernames);
+                new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, usernames);
 
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereNotEqualTo("username", ParseUser.getCurrentUser().getUsername());

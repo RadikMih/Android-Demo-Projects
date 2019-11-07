@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -59,13 +60,16 @@ public class UserFeedActivity extends AppCompatActivity {
 
                                         imageView.setImageBitmap(bitmap);
                                         imageView.setPadding(0, 0, 0, 15);
-
                                         linearLayout.addView(imageView);
+                                    } else {
+                                        e.printStackTrace();
                                     }
                                 }
                             });
                         }
                     }
+                } else {
+                    Log.e("Check", e.toString());
                 }
             }
         });

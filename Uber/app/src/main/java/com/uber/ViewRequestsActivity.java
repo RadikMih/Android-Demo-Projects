@@ -44,6 +44,11 @@ public class ViewRequestsActivity extends AppCompatActivity {
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Request");
             final ParseGeoPoint geoPointLocation = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
             query.whereNear("location", geoPointLocation);
+
+            query.whereDoesNotExist("driverUsername");
+
+
+
             query.setLimit(10);
             query.findInBackground(new FindCallback<ParseObject>() {
                 @Override

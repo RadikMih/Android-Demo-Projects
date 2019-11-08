@@ -44,7 +44,7 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
 
     public void logout(View view) {
         ParseUser.logOut();
-        Intent intent = new Intent(getApplicationContext(), RiderActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
     }
 

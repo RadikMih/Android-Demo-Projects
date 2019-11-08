@@ -15,6 +15,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -120,7 +121,8 @@ public class DriverLocationActivity extends FragmentActivity implements OnMapRea
 
         ArrayList<Marker> markers = new ArrayList<>();
         markers.add(mMap.addMarker(new MarkerOptions().position(driverLocation).title("Your Location")));
-        markers.add(mMap.addMarker(new MarkerOptions().position(requestLocation).title("Request Location")));
+        markers.add(mMap.addMarker(new MarkerOptions().position(requestLocation).title("Request Location")
+        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))));
 
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
 
@@ -129,7 +131,7 @@ public class DriverLocationActivity extends FragmentActivity implements OnMapRea
         }
         LatLngBounds bounds = builder.build();
 
-        int padding = 100;
+        int padding = 150;
         CameraUpdate update = CameraUpdateFactory.newLatLngBounds(bounds, padding);
         mMap.animateCamera(update);
     }

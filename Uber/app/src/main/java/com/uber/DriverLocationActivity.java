@@ -4,10 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.widget.RelativeLayout;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -85,15 +82,6 @@ public class DriverLocationActivity extends FragmentActivity implements OnMapRea
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-//        ConstraintLayout mapLayout = findViewById(R.id.mapLayout);
-//        mapLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override
-//            public void onGlobalLayout() {
-//
-//            }
-//        });
-
-
     }
 
 
@@ -122,10 +110,9 @@ public class DriverLocationActivity extends FragmentActivity implements OnMapRea
         ArrayList<Marker> markers = new ArrayList<>();
         markers.add(mMap.addMarker(new MarkerOptions().position(driverLocation).title("Your Location")));
         markers.add(mMap.addMarker(new MarkerOptions().position(requestLocation).title("Request Location")
-        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))));
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))));
 
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
-
         for (Marker marker : markers) {
             builder.include(marker.getPosition());
         }

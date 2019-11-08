@@ -23,6 +23,7 @@ import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,11 +45,7 @@ public class ViewRequestsActivity extends AppCompatActivity {
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Request");
             final ParseGeoPoint geoPointLocation = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
             query.whereNear("location", geoPointLocation);
-
             query.whereDoesNotExist("driverUsername");
-
-
-
             query.setLimit(10);
             query.findInBackground(new FindCallback<ParseObject>() {
                 @Override
@@ -63,7 +60,6 @@ public class ViewRequestsActivity extends AppCompatActivity {
                                 Double distanceInKilometers = geoPointLocation.distanceInKilometersTo(requestLocation);
                                 Double distanceOneDP = Math.round(distanceInKilometers * 10) / 10.0;
                                 requests.add(distanceOneDP.toString() + " km");
-
                                 requestLatitudes.add(requestLocation.getLatitude());
                                 requestLongitudes.add(requestLocation.getLongitude());
                                 usernames.add(object.getString("username"));
@@ -115,12 +111,16 @@ public class ViewRequestsActivity extends AppCompatActivity {
             }
         });
 
-
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 updateListView(location);
+
+                ParseUser.getCurrentUser().put(
+                        "location",
+                        new ParseGeoPoint(location.getLatitude(), location.getLongitude()));
+                ParseUser.getCurrentUser().saveInBackground();
             }
 
             @Override

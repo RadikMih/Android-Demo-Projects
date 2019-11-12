@@ -1,5 +1,6 @@
 package com.whatsapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,13 @@ import com.parse.SignUpCallback;
 public class MainActivity extends AppCompatActivity {
 
     Boolean loginModeActive = false;
+
+    public void redirectIfLoggedIn() {
+        if (ParseUser.getCurrentUser() != null) {
+            Intent intent = new Intent(getApplicationContext(), UserListActivity.class);
+            startActivity(intent);
+        }
+    }
 
     public void toggleLoginMode(View view) {
 
@@ -51,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 public void done(ParseUser user, ParseException e) {
                     if (e == null) {
                         Log.i("Info", "User logged in");
+                        redirectIfLoggedIn();
                     } else {
                         e.printStackTrace();
                         Toast.makeText(
@@ -70,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 public void done(ParseException e) {
                     if (e == null) {
                         Log.i("Info", "user signed up");
+                        redirectIfLoggedIn();
                     } else {
                         e.printStackTrace();
                         Toast.makeText(
@@ -98,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setTitle("WhatsApp Login");
+        redirectIfLoggedIn();
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
     }
 }

@@ -1,6 +1,9 @@
 package com.whatsapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -27,6 +30,15 @@ public class UserListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_list);
 
         ListView userListView = findViewById(R.id.userListView);
+        userListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                intent.putExtra("username", users.get(position));
+                startActivity(intent);
+            }
+        });
+
         users.clear();
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, users);
         userListView.setAdapter(arrayAdapter);

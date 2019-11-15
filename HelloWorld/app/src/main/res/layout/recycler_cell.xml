@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cellLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#E0E0D7"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/fistnameTextView"
+        android:layout_width="183dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="#A1E0E9"
+        android:includeFontPadding="false"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lastnameTextView"
+        android:layout_width="183dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#A1E0E9"
+        android:includeFontPadding="false"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fistnameTextView" />
+
+    <ImageView
+        android:id="@+id/userImageView"
+        android:layout_width="85dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="87dp"
+        android:layout_marginEnd="44dp"
+
+        android:contentDescription="@string/userimage"
+
+        app:layout_constraintBottom_toBottomOf="@+id/lastnameTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fistnameTextView"
+        app:layout_constraintTop_toTopOf="@+id/fistnameTextView"
+        app:layout_constraintVertical_bias="1.0"
+
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

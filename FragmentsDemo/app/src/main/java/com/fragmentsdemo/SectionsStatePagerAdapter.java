@@ -18,7 +18,7 @@ public class SectionsStatePagerAdapter extends FragmentStatePagerAdapter {
         super(fm, behavior);
     }
 
-    private void addFragment(Fragment fragment, String title) {
+    public void addFragment(Fragment fragment, String title) {
         fragmentList.add(fragment);
         fragmentTitleList.add(title);
     }
@@ -31,6 +31,6 @@ public class SectionsStatePagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return fragmentList.size();
     }
 }

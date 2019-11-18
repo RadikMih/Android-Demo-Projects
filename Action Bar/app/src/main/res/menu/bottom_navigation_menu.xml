@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/ic_android"
+        android:icon="@drawable/ic_android"
+        android:title="android" />
+
+    <item
+        android:id="@+id/ic_camera"
+        android:icon="@drawable/ic_camera"
+        android:title="camera" />
+
+    <item
+        android:id="@+id/ic_car"
+        android:icon="@drawable/ic_car"
+        android:title="car" />
+
+    <item
+        android:id="@+id/ic_security"
+        android:icon="@drawable/ic_security"
+        android:title="security" />
+
+    <item
+        android:id="@+id/ic_star"
+        android:icon="@drawable/ic_star"
+        android:title="star" />
+
+
+
+
+
+
+</menu>

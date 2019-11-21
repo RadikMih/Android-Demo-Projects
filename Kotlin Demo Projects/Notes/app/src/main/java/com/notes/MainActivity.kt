@@ -18,14 +18,28 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         addNoteFab.setOnClickListener {
-            val intent = Intent(this, NoteDetailsActivity::class.java)
-            startActivity(intent)
+            openNoteDetailsActivity(0)
         }
+
+        notesListView.setOnItemClickListener { parent, view, position, id ->
+            openNoteDetailsActivity(id)
+        }
+    }
+
+    fun openNoteDetailsActivity(noteId: Long) {
+        val intent = Intent(this, NoteDetailsActivity::class.java)
+        intent.putExtra("NOTE_ID", noteId)
+        startActivity(intent)
+    }
+
+    override fun onStart() {
+        super.onStart()
 
         var objectToCreateDB = NotesSQLiteOpenHelper(this)
         db = objectToCreateDB.readableDatabase
 
-        cursor = db!!.query("notes", arrayOf("_id", "title"),
+        cursor = db!!.query(
+            "notes", arrayOf("_id", "title"),
             null, null, null, null, null
         )
 
@@ -37,9 +51,7 @@ class MainActivity : AppCompatActivity() {
             intArrayOf(android.R.id.text1),
             0
         )
-
         notesListView.adapter = listAdapter
-
     }
 
     override fun onDestroy() {

@@ -4,9 +4,10 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+// "BestQuotesDB"
 
 class BestQuotesSQLiteOpenHelper(context: Context) :
-    SQLiteOpenHelper(context, "BestQuotesDB", null, 1) {
+    SQLiteOpenHelper(context, null, null, 1) {
     override fun onCreate(db: SQLiteDatabase?) {
         db!!.execSQL(
             "CREATE TABLE quote_categories(" +

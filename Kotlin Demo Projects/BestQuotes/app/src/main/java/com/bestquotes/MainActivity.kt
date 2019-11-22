@@ -1,5 +1,6 @@
 package com.bestquotes
 
+import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
@@ -33,7 +34,11 @@ class MainActivity : AppCompatActivity() {
             listOfCategories.add(category)
         }
 
-        categoriesAdapter = CategoriesAdapter(this, listOfCategories)
+        categoriesAdapter = CategoriesAdapter(this, listOfCategories) { categoryId ->
+            val intent = Intent(this, QuotesDetailsActivity::class.java)
+            intent.putExtra("QUOTE_CATEGORY_ID", categoryId)
+            startActivity(intent)
+        }
 
        // val categoriesLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
          val categoriesLayoutManager = GridLayoutManager(this, 2)

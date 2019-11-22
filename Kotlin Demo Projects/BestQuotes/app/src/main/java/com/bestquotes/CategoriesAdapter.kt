@@ -8,12 +8,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class CategoriesAdapter(private val context: Context, private val categories: List<Category>) :
+class CategoriesAdapter(
+    private val context: Context,
+    private val categories: List<Category>,
+    private val onItemClick: (Int) -> Unit
+) :
     RecyclerView.Adapter<CategoriesAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.category_item, parent, false)
-        return MyViewHolder(view)
+        return MyViewHolder(view, onItemClick)
     }
 
     override fun getItemCount(): Int {
@@ -24,13 +28,17 @@ class CategoriesAdapter(private val context: Context, private val categories: Li
         holder.bindData(categories[position], context)
     }
 
-    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    inner class MyViewHolder(itemView: View, val onItemClick: (Int) -> Unit) :
+        RecyclerView.ViewHolder(itemView) {
         private val categoryImage = itemView.findViewById<ImageView>(R.id.categoryImageView)
         private val categoryName = itemView.findViewById<TextView>(R.id.categoryTitleTextView)
 
         fun bindData(category: Category, context: Context) {
             categoryImage.setImageResource(category.resourceId)
             categoryName.text = category.name
+            itemView.setOnClickListener {
+                onItemClick(category.id)
+            }
         }
     }
 }

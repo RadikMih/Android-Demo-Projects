@@ -28,6 +28,13 @@ class BestQuotesSQLiteOpenHelper(context: Context) :
         insertQuotes(db, "Text 1", 1)
         insertQuotes(db, "Text 2", 1)
         insertQuotes(db, "Test 3", 1)
+        insertQuotes(db, "Test 3", 1)
+        insertQuotes(db, "Test 3", 1)
+        insertQuotes(db, "Test 3", 1)
+        insertQuotes(db, "Test 3", 1)
+        insertQuotes(db, "Test 3", 1)
+        insertQuotes(db, "Test 3", 1)
+        insertQuotes(db, "Test 3", 1)
 
     }
 

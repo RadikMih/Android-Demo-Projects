@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class QuotesAdapter(
-    val context: Context,
-    val quotes: List<String>,
+    private val context: Context,
+    private val quotes: List<String>,
     private val onItemClick: (String) -> Unit
 ) :
     RecyclerView.Adapter<QuotesAdapter.QuotesViewHolder>() {
@@ -25,11 +25,12 @@ class QuotesAdapter(
 
     override fun onBindViewHolder(holder: QuotesViewHolder, position: Int) {
         holder.bindQuotes(quotes[position])
+        AnimationHelper.animate(holder.itemView)
     }
 
     inner class QuotesViewHolder(itemView: View, onItemClick: (String) -> Unit) :
         RecyclerView.ViewHolder(itemView) {
-        val quotesTextView = itemView.findViewById<TextView>(R.id.quoteTextView)
+        private val quotesTextView = itemView.findViewById<TextView>(R.id.quoteTextView)
 
         fun bindQuotes(quote: String) {
             quotesTextView.text = quote

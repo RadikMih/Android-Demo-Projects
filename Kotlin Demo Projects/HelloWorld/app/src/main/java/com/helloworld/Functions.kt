@@ -9,3 +9,7 @@ fun main() {
 fun getArea(width: Int, length: Int): Int {
     return width * length
 }
+
+val number = {number1: Int, number2: Int ->
+    number1 + number2
+}

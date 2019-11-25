@@ -16,5 +16,10 @@ fun main() {
         println("i = $i")
     }
 
+    for (i in 100 downTo 3 step 10) {
+        println("i = $i")
+    }
+
+
     val elements = Array<Byte>(3){0}
 }

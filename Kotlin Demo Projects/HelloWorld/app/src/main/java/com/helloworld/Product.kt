@@ -13,3 +13,7 @@ class Product(
         return price - discount
     }
 }
+
+fun Product.getFinalPrice(): Double {
+    return this.calculateFinalPrice()
+}

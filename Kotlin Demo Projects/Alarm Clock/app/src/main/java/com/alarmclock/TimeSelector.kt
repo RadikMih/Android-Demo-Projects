@@ -17,15 +17,13 @@ class TimeSelector : DialogFragment() {
     ): View? {
         var view = inflater.inflate(R.layout.fragment_time_selector, container, false)
         var doneButton = view.findViewById<Button>(R.id.buDone)
-        var timePicker =  view.findViewById<TimePicker>(R.id.tp1)
+        var timePicker = view.findViewById<TimePicker>(R.id.tp1)
 
-        doneButton.setOnClickListener{
+        doneButton.setOnClickListener {
             val mainActivity = activity as MainActivity
             mainActivity.showTime(timePicker.hour, timePicker.minute)
             this.dismiss()
         }
-
-
         return view
     }
 

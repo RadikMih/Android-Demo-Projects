@@ -10,7 +10,7 @@ import java.util.*
 class SendData {
 
     var context: Context? = null
-    var sharedRef: SharedPreferences? = null
+    private var sharedRef: SharedPreferences? = null
 
     constructor(context: Context) {
         this.context = context

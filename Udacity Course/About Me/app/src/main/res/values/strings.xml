@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">About Me</string>
+    <string name="name">Radik</string>
+    <string name="yellow_star">Yellow Star</string>
+    <string name="bio">Pellentesque eu tincidunt tortor aliquam nulla facilisi cras.
+        Vitae congue mauris rhoncus aenean vel. Ut etiam sit amet nisl.
+        Tincidunt arcu non sodales neque sodales ut. Ac odio tempor orci dapibus ultrices.
+        Hac habitasse platea dictumst quisque sagittis purus sit amet.
+        Gravida neque convallis a cras semper auctor neque vitae tempus.
+        Sit amet commodo nulla facilisi nullam vehicula ipsum a arcu.
+        At consectetur lorem donec massa sapien.
+        Id velit ut tortor pretium viverra suspendisse potenti nullam ac.
+        Blandit cursus risus at ultrices mi tempus imperdiet nulla malesuada.
+        Viverra ipsum nunc aliquet bibendum enim facilisis gravida neque convallis.
+        Ultrices vitae auctor eu augue ut. Mattis molestie a iaculis at.
+        \n
+        Pellentesque eu tincidunt tortor aliquam nulla facilisi cras.
+        Vitae congue mauris rhoncus aenean vel. Ut etiam sit amet nisl.
+        Tincidunt arcu non sodales neque sodales ut. Ac odio tempor orci dapibus ultrices.
+        Hac habitasse platea dictumst quisque sagittis purus sit amet.
+        Gravida neque convallis a cras semper auctor neque vitae tempus.
+        Sit amet commodo nulla facilisi nullam vehicula ipsum a arcu.
+        At consectetur lorem donec massa sapien.
+        Id velit ut tortor pretium viverra suspendisse potenti nullam ac.
+        Blandit cursus risus at ultrices mi tempus imperdiet nulla malesuada.
+        Viverra ipsum nunc aliquet bibendum enim facilisis gravida neque convallis.
+        Ultrices vitae auctor eu augue ut. Mattis molestie a iaculis at.
+    </string>
+    <string name="what_is_your_nickname">What is your nickname?</string>
+    <string name="done">Done</string>
+</resources>

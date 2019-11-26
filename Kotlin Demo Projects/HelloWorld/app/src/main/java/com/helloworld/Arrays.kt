@@ -21,5 +21,5 @@ fun main() {
     }
 
 
-    val elements = Array<Byte>(3){0}
+    val elements = Array<Byte>(3) { 0 }
 }

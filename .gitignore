@@ -31,7 +31,7 @@ build/
 .vscode/
 
 # Android Studio
-*.gradle
+.gradle
 /local.properties
 .DS_Store
 /build

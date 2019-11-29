@@ -41,19 +41,6 @@ class GameFragment : Fragment() {
         binding.gameViewModel = viewModel
         binding.lifecycleOwner = this
 
-//        viewModel.score.observe(this, Observer { newScore ->
-//            binding.scoreText.text = newScore.toString()
-//        })
-
-//        viewModel.word.observe(this, Observer { newWord ->
-//            binding.wordText.text = newWord.toString()
-//        })
-
-        viewModel.currentTime.observe(this, Observer { newTime ->
-            binding.timerText.text = DateUtils.formatElapsedTime(newTime)
-        })
-
-
         viewModel.eventGameFinished.observe(this, Observer { isFinished ->
             if (isFinished) {
                 val currentScore = viewModel.score.value ?: 0

@@ -64,13 +64,10 @@ class SleepTrackerFragment : Fragment() {
         binding.sleepTrackerViewModel = sleepTrackerViewModel
 
         val manager = GridLayoutManager(activity, 3)
-       binding.sleepList.layoutManager = manager
+        binding.sleepList.layoutManager = manager
 
-
-
-
-        val adapter = SleepNightAdapter(SleepNightListener {
-            nightId -> Toast.makeText(context, "${nightId}", Toast.LENGTH_LONG).show()
+        val adapter = SleepNightAdapter(SleepNightListener { nightId ->
+            Toast.makeText(context, "$nightId", Toast.LENGTH_LONG).show()
         })
         binding.sleepList.adapter = adapter
 

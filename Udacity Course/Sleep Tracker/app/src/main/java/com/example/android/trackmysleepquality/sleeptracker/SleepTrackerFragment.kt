@@ -63,7 +63,7 @@ class SleepTrackerFragment : Fragment() {
         binding.sleepTrackerViewModel = sleepTrackerViewModel
 
         val manager = GridLayoutManager(activity, 3)
-        manager.spanSizeLookup = object: GridLayoutManager.SpanSizeLookup() {
+        manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int) = when (position) {
                 0 -> 3
                 else -> 1
@@ -107,11 +107,15 @@ class SleepTrackerFragment : Fragment() {
 
         sleepTrackerViewModel.showSnackbarEvent.observe(this, Observer {
             if (it == true) {
-                Snackbar.make(
-                        activity!!.findViewById(android.R.id.content),
-                        getString(R.string.cleared_message),
-                        Snackbar.LENGTH_SHORT
-                ).show()
+
+                activity?.let { fragmentActivity ->
+                    Snackbar.make(
+                            fragmentActivity.findViewById(android.R.id.content),
+                            getString(R.string.cleared_message),
+                            Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+
                 sleepTrackerViewModel.doneShowingSnackbar()
             }
         })

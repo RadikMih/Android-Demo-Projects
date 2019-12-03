@@ -36,12 +36,12 @@ class OverviewViewModel : ViewModel() {
     private val _status = MutableLiveData<String>()
 
     // The external immutable LiveData for the request status String
-    val response: LiveData<String>
+    val status: LiveData<String>
         get() = _status
 
-    private val _property = MutableLiveData<MarsProperty>()
-    val property: LiveData<MarsProperty>
-        get() = _property
+    private val _properties = MutableLiveData<List<MarsProperty>>()
+    val properties: LiveData<List<MarsProperty>>
+        get() = _properties
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -58,17 +58,16 @@ class OverviewViewModel : ViewModel() {
      */
     private fun getMarsRealEstateProperties() {
         coroutineScope.launch {
-            val getPropertiesDeffered = MarsApi.retrofitService.getProperties()
+            val getPropertiesDeferred = MarsApi.retrofitService.getProperties()
             try {
-                val listResult = getPropertiesDeffered.await()
-                if (listResult.isNotEmpty()) {
-                    _property.value = listResult[0]
-                }
+                val listResult = getPropertiesDeferred.await()
+                _status.value = "Success: ${listResult.size}"
+                _properties.value = listResult
+
             } catch (t: Throwable) {
-                _status.value = "Failure: " + t.message
+                _status.value = "Failure: ${t.message}"
             }
         }
-
     }
 
     override fun onCleared() {

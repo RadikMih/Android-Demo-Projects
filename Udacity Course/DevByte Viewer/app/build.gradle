@@ -5,15 +5,25 @@ apply plugin: "androidx.navigation.safeargs"
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.example.android.devbyteviewer"
         minSdkVersion 19
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled = true
+
+//        javaCompileOptions {
+//            annotationProcessorOptions {
+//                arguments = [
+//                        "room.incremental": "true"
+//                ]
+//
+//            }
+//        }
     }
     buildTypes {
         release {
@@ -24,6 +34,10 @@ android {
 
     dataBinding {
         enabled = true
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 
 }
@@ -74,5 +88,7 @@ dependencies {
     kapt "androidx.room:room-compiler:$version_room"
 
     // WorkManager
-    implementation "android.arch.work:work-runtime-ktx:$version_work"
+//    implementation "androidx.work:work-runtime-ktx:$version_work"
+    implementation "androidx.work:work-runtime-ktx:2.2.0"
+    implementation "androidx.multidex:multidex:$multidex_version"
 }

@@ -6,7 +6,6 @@ import androidx.room.*
 
 @Dao
 interface VideoDao {
-
     @Query("select * from databasevideo")
     fun getVideos(): LiveData<List<DatabaseVideo>>
 
@@ -15,18 +14,18 @@ interface VideoDao {
 }
 
 @Database(entities = [DatabaseVideo::class], version = 1)
-abstract class VideoDatabase : RoomDatabase() {
+abstract class VideosDatabase : RoomDatabase() {
     abstract val videoDao: VideoDao
 }
 
-private lateinit var INSTANCE: VideoDatabase
+private lateinit var INSTANCE: VideosDatabase
 
-fun getDatabase(context: Context): VideoDatabase {
-    synchronized(VideoDatabase::class.java) {
+fun getDatabase(context: Context): VideosDatabase {
+    synchronized(VideosDatabase::class.java) {
         if (!::INSTANCE.isInitialized) {
             INSTANCE = Room.databaseBuilder(
                     context.applicationContext,
-                    VideoDatabase::class.java,
+                    VideosDatabase::class.java,
                     "videos"
             ).build()
         }

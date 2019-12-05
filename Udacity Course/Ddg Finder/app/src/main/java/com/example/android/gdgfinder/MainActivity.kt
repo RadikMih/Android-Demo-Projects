@@ -3,6 +3,7 @@ package com.example.android.gdgfinder
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -20,7 +21,10 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         setupNavigation()
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
     }
+
 
     /**
      * Called when the hamburger menu or back button are pressed on the Toolbar

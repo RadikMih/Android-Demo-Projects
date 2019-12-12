@@ -19,10 +19,6 @@
         android:layout_height="match_parent"
         tools:context=".sleeptracker.SleepTrackerFragment">
 
-        <!-- Simplest way of displaying scrollable text and data. There is a
-             better and more efficient way to do this, and you will learn about
-             RecyclerView in a later lesson. -->
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/sleep_list"
             android:layout_width="0dp"

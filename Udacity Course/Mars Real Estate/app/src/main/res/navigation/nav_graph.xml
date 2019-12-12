@@ -21,7 +21,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/overviewFragment">
+    app:startDestination="@id/horizontalFragment">
 
     <fragment
         android:id="@+id/overviewFragment"
@@ -41,6 +41,14 @@
         <argument
             android:name="selectedProperty"
             app:argType="com.example.android.marsrealestate.network.MarsProperty"/>
+    </fragment>
+    <fragment
+        android:id="@+id/horizontalFragment"
+        android:name="com.example.android.marsrealestate.horizontal.HorizontalFragment"
+        android:label="@layout/fragment_horizontal" >
+        <action
+            android:id="@+id/action_horizontalFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
     </fragment>
 
 </navigation>

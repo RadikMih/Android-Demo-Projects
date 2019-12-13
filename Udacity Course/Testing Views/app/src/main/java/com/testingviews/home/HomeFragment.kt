@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.testingviews.R
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.layout_row_list.*
 
 
 class HomeFragment : Fragment() {
@@ -40,7 +41,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recently_played_list.apply {
+        item_list.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL,false)
             adapter = ListItemAdapter(items)
         }

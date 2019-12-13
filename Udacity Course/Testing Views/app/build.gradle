@@ -24,6 +24,9 @@ android {
     packagingOptions {
         pickFirst  'META-INF/*'
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {

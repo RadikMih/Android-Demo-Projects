@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.testingviews.R
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.layout_row_list.*
 
 
@@ -41,7 +40,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        item_list.apply {
+        child_recycler_view.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL,false)
             adapter = ListItemAdapter(items)
         }

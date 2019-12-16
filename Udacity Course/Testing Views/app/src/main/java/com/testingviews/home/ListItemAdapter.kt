@@ -1,7 +1,6 @@
 package com.testingviews.home
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -31,7 +30,13 @@ class ListItemAdapter(var items: List<Data>) :
     }
 
     class ListItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-        RecyclerView.ViewHolder(inflater.inflate(R.layout.layout_content_list_item, parent, false)) {
+        RecyclerView.ViewHolder(
+            inflater.inflate(
+                R.layout.layout_content_list_item,
+                parent,
+                false
+            )
+        ) {
         val name: TextView = itemView.tv_station_name
         val image: ImageView = itemView.iv_station_logo
 

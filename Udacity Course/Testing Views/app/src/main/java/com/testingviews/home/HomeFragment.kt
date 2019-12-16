@@ -13,13 +13,6 @@ import kotlinx.android.synthetic.main.layout_row_list.*
 
 class HomeFragment : Fragment() {
 
-    private val items = listOf(
-        Data("Test 1", R.drawable.ic_launcher_background),
-        Data("Test 2", R.drawable.ic_launcher_background),
-        Data("Test 3", R.drawable.ic_launcher_background),
-        Data("Test 4", R.drawable.ic_launcher_background)
-    )
-
     companion object {
         fun newInstance(): HomeFragment = HomeFragment()
     }
@@ -41,12 +34,29 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         child_recycler_view.apply {
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL,false)
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             adapter = ListItemAdapter(items)
         }
     }
 
+    // ================ DATA =================================
 
+
+    private val items = listOf(
+        Data("Test 1", R.drawable.ic_launcher_background),
+        Data("Test 2", R.drawable.default_no_station_logo),
+        Data("Test 3", R.drawable.ic_discover_country),
+        Data("Test 4", R.drawable.ic_discover_genre),
+        Data("Test 5", R.drawable.ic_discover_moods),
+        Data("Test 6", R.drawable.ic_discover_search),
+        Data("Test 7", R.drawable.ic_launcher_background)
+    )
+
+    private val categories = arrayListOf(
+        ParentData("Recently played", items),
+        ParentData("Discover", items),
+        ParentData("Favorites", items)
+    )
 
 
 }

@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+
     private val bottomNavigationItemListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -23,7 +24,6 @@ class MainActivity : AppCompatActivity() {
                     replaceFragment(SearchFragment())
                     item.isChecked = true
                 }
-
             }
             false
         }

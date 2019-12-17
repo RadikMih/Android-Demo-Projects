@@ -23,24 +23,16 @@
         android:id="@+id/parent_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:clipToPadding="true"
         android:orientation="vertical"
         app:layoutManager="LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/now_playing_include"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/page_title_text_view"
-        tools:listitem="@layout/layout_row_list"
-        android:clipToPadding="true"/>
-
-    <include
-        android:id="@+id/now_playing_include"
-        layout="@layout/layout_now_playing"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:visibility="gone" />
+        app:layout_constraintTop_toBottomOf="@+id/page_title_text_view"
+        tools:listitem="@layout/layout_row_list" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

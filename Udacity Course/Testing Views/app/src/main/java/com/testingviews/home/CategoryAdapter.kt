@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.layout_row_list.view.*
 class CategoryAdapter(var categories: List<ParentData>) :
     RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
-
     val viewPool = RecyclerView.RecycledViewPool()
     private lateinit var category: ParentData
 
@@ -34,28 +33,23 @@ class CategoryAdapter(var categories: List<ParentData>) :
     }
 
     inner class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val title: TextView = itemView.findViewById(R.id.category_name_text_view)
-        val recyclerView: RecyclerView = itemView.findViewById(R.id.child_recycler_view)
-        val childLayoutManager = LinearLayoutManager(
+        private val title: TextView = itemView.findViewById(R.id.category_name_text_view)
+        private val recyclerView: RecyclerView = itemView.findViewById(R.id.child_recycler_view)
+        private val childLayoutManager = LinearLayoutManager(
             itemView.child_recycler_view.context,
             LinearLayoutManager.HORIZONTAL,
             false
         )
 
         fun bind(data: ParentData) {
-
             childLayoutManager.initialPrefetchItemCount = 4
             title.text = data.title
             recyclerView.apply {
                 layoutManager = childLayoutManager
+                overScrollMode = View.OVER_SCROLL_NEVER
                 adapter = ListItemAdapter(category.children)
                 setRecycledViewPool(viewPool)
             }
-
-
         }
-
     }
-
-
 }

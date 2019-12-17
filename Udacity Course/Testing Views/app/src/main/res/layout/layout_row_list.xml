@@ -42,6 +42,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/category_name_text_view"
         android:paddingEnd="16dp"
+        android:paddingStart="0dp"
         android:clipToPadding="false"
         tools:listitem="@layout/layout_content_list_item" />
 

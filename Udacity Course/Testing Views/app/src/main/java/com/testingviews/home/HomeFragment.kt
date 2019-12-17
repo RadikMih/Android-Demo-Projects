@@ -36,6 +36,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recyclerView = view.findViewById(R.id.parent_recycler_view)
+        recyclerView.overScrollMode = View.OVER_SCROLL_NEVER
         recyclerView.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             adapter = CategoryAdapter(categories)

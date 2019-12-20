@@ -51,6 +51,7 @@ dependencies {
     implementation "com.google.android.exoplayer:exoplayer-core:2.10.1"
     implementation "com.google.android.exoplayer:exoplayer-ui:2.10.1"
     implementation "com.google.android.exoplayer:extension-mediasession:2.10.1"
+    implementation "com.google.android.exoplayer:exoplayer:2.8.2"
     implementation 'org.koin:koin-androidx-viewmodel:2.0.0'
 
 

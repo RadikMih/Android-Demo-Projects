@@ -54,13 +54,14 @@ class MainActivity : AppCompatActivity() {
         playPauseButton.setOnClickListener {
             isPlaying = !isPlaying
             changePlayPause(isPlaying, it)
-
+            audioService.initializePlayer(uri)
 
         }
 
         likeDislikeButton.setOnClickListener {
             isLiked = !isLiked
             changeLikeDislike(isLiked, it)
+
         }
 
 

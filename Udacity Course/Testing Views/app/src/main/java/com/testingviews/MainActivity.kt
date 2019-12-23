@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         var isPlaying = false
         var isLiked = false
 
-        // TODO - consider data binding
+        // consider data binding
         val likeDislikeButton: Button = like_dislike_button
         val playPauseButton: Button = play_pause_button
 

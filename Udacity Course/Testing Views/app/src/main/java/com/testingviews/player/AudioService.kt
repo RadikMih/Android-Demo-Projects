@@ -12,10 +12,10 @@ import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 
-private const val ACTION_PLAY = "ACTION_PLAY"
-private const val ACTION_PAUSE = "ACTION_PAUSE"
-private const val ACTION_STOP = "ACTION_STOP"
-private const val RADIO_URL = "https://fm4shoutcast.sf.apa.at/;"
+//private const val ACTION_PLAY = "ACTION_PLAY"
+//private const val ACTION_PAUSE = "ACTION_PAUSE"
+//private const val ACTION_STOP = "ACTION_STOP"
+//private const val RADIO_URL = "https://fm4shoutcast.sf.apa.at/;"
 
 class AudioService : Service() {
 
@@ -47,7 +47,6 @@ class AudioService : Service() {
         //exoPlayer = ExoPlayerFactory.newSimpleInstance(applicationContext, trackSelector)
         exoPlayer = ExoPlayerFactory.newSimpleInstance(applicationContext)
         // exoPlayer?.addListener(this)  // , Player.EventListener
-
 
         dataSourceFactory = DefaultDataSourceFactory(
             applicationContext,

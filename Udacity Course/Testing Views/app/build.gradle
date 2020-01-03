@@ -52,7 +52,7 @@ dependencies {
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
-    implementation "com.google.android.exoplayer:exoplayer-core:2.10.1"
+    implementation "com.google.android.exoplayer:exoplayer-core:2.10.6"
     implementation "com.google.android.exoplayer:exoplayer-ui:2.10.1"
     implementation "com.google.android.exoplayer:extension-mediasession:2.10.1"
     implementation "com.google.android.exoplayer:exoplayer:2.8.2"

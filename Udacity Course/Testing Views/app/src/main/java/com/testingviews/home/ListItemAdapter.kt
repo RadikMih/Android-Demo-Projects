@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.testingviews.R
 import kotlinx.android.synthetic.main.layout_content_list_item.view.*
 
-class ListItemAdapter(var items: List<Data>) :
+class ListItemAdapter(private var items: List<Data>) :
     RecyclerView.Adapter<ListItemAdapter.ListItemViewHolder>() {
 
 

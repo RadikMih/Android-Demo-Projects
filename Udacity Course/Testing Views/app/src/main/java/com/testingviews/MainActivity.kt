@@ -147,6 +147,6 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Timber.i("onDestroy")
-      //unbindService(myConnection)
+        //unbindService(myConnection)
     }
 }

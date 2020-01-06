@@ -6,10 +6,10 @@
     >
 
 <!--    <data>-->
-<!--        <variable-->
-<!--            name="item"-->
-<!--            type="com.testingviews.home.Data" />-->
-<!--    </data>-->
+<!--    <variable-->
+<!--        name="item"-->
+<!--        type="com.testingviews.home.ParentData" />-->
+<!--</data>-->
 
 
 <androidx.constraintlayout.widget.ConstraintLayout

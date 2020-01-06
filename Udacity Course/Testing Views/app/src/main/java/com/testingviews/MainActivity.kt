@@ -13,13 +13,18 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.testingviews.R.drawable.*
+import com.testingviews.databinding.ActivityMainBinding
 import com.testingviews.home.HomeFragment
 import com.testingviews.player.AudioService
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_now_playing.*
+import timber.log.Timber
 
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+    var isPlaying = false
 
     var audioService: AudioService? = null
     var isBound = false
@@ -45,11 +50,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Timber.i("onCreate")
+        //binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         bottom_navigation.setOnNavigationItemSelectedListener(bottomNavigationItemListener)
         replaceFragment(HomeFragment())
 
-        var isPlaying = false
+        isPlaying = false
         var isLiked = false
 
         // consider data binding
@@ -58,6 +65,11 @@ class MainActivity : AppCompatActivity() {
 
         val intent = Intent(this, AudioService::class.java)
         bindService(intent, myConnection, Context.BIND_AUTO_CREATE)
+
+        if (savedInstanceState != null) {
+            val playing = savedInstanceState.get("state") as Boolean
+            changePlayPause(playing, playPauseButton)
+        }
 
         playPauseButton.setOnClickListener {
             isPlaying = !isPlaying
@@ -71,10 +83,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val myConnection = object : ServiceConnection {
-        override fun onServiceConnected(
-            className: ComponentName,
-            service: IBinder
-        ) {
+        override fun onServiceConnected(className: ComponentName, service: IBinder) {
             val binder = service as AudioService.LocalBinder
             audioService = binder.getService()
             isBound = true
@@ -106,5 +115,38 @@ class MainActivity : AppCompatActivity() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container, fragment)
         fragmentTransaction.commit()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Timber.i("SAVED")
+        outState.putBoolean("state", isPlaying)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        // called after onStart
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Timber.i("onStart")
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Timber.i("onResume")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Timber.i("onRestart")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Timber.i("onDestroy")
+      //unbindService(myConnection)
     }
 }

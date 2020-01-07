@@ -12,6 +12,7 @@ import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
+import timber.log.Timber
 
 
 //private const val RADIO_URL = "https://fm4shoutcast.sf.apa.at/;"
@@ -49,8 +50,7 @@ class AudioService : Service() {
 //            AdaptiveTrackSelection.Factory(bandwidthMeter)
 //        val trackSelector = DefaultTrackSelector(trackSelectionFactory)
         //exoPlayer = ExoPlayerFactory.newSimpleInstance(applicationContext, trackSelector)
-
-
+        Timber.i("onCreate")
         mediaSession = MediaSessionCompat(this, javaClass.simpleName)
         mediaSession?.isActive = true
 
@@ -72,6 +72,17 @@ class AudioService : Service() {
         status = PlaybackStatus.IDLE
     }
 
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        Timber.i("onStartCommand")
+        return START_STICKY
+    }
+
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        stopSelf()
+        super.onTaskRemoved(rootIntent)
+    }
+
+
     fun play() {
         exoPlayer?.playWhenReady = true
         notificationManager?.startNotify()
@@ -80,25 +91,32 @@ class AudioService : Service() {
     fun stop() {
         exoPlayer?.playWhenReady = false
         notificationManager?.cancelNotify()
+
     }
 
     private fun releasePlayer() {
         exoPlayer?.stop()
         exoPlayer?.release()
         exoPlayer = null
+
     }
 
     override fun onDestroy() {
         super.onDestroy()
         releasePlayer()
+
+
+        Timber.i("onDestroy")
     }
 
     override fun onBind(intent: Intent?): IBinder? {
+        Timber.i("onBind")
         return iBinder
     }
 
     override fun onUnbind(intent: Intent?): Boolean {
-        stopSelf()
+       // stopSelf()
+        Timber.i("onUnbind")
         return super.onUnbind(intent)
     }
 

@@ -26,6 +26,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     var isPlaying = false
 
+    // consider data binding
+    private lateinit var likeDislikeButton: Button
+    lateinit var playPauseButton: Button
+
     var audioService: AudioService? = null
     var isBound = false
     //  private val uri: Uri = Uri.parse("https://fm4shoutcast.sf.apa.at/;")
@@ -55,21 +59,17 @@ class MainActivity : AppCompatActivity() {
 
         bottom_navigation.setOnNavigationItemSelectedListener(bottomNavigationItemListener)
         replaceFragment(HomeFragment())
+        playPauseButton = play_pause_button
+        likeDislikeButton = like_dislike_button
 
         isPlaying = false
         var isLiked = false
 
-        // consider data binding
-        val likeDislikeButton: Button = like_dislike_button
-        val playPauseButton: Button = play_pause_button
-
-        val intent = Intent(this, AudioService::class.java)
-        bindService(intent, myConnection, Context.BIND_AUTO_CREATE)
-
         if (savedInstanceState != null) {
-            val playing = savedInstanceState.get("state") as Boolean
-            changePlayPause(playing, playPauseButton)
+            isPlaying = savedInstanceState.get("state") as Boolean
+            changePlayPause(isPlaying, playPauseButton)
         }
+
 
         playPauseButton.setOnClickListener {
             isPlaying = !isPlaying
@@ -80,6 +80,8 @@ class MainActivity : AppCompatActivity() {
             isLiked = !isLiked
             changeLikeDislike(isLiked, it)
         }
+        val intent = Intent(this, AudioService::class.java)
+        startService(intent)
     }
 
     private val myConnection = object : ServiceConnection {
@@ -87,6 +89,7 @@ class MainActivity : AppCompatActivity() {
             val binder = service as AudioService.LocalBinder
             audioService = binder.getService()
             isBound = true
+            changePlayPause(isPlaying, playPauseButton) // class
         }
 
         override fun onServiceDisconnected(name: ComponentName) {
@@ -102,6 +105,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             resId = ic_play_circle_outline
             audioService?.stop()
+
         }
         it.background = ContextCompat.getDrawable(this, resId)
     }
@@ -131,7 +135,8 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         Timber.i("onStart")
-
+        val intent = Intent(this, AudioService::class.java)
+        bindService(intent, myConnection, Context.BIND_AUTO_CREATE)
     }
 
     override fun onResume() {
@@ -147,6 +152,6 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Timber.i("onDestroy")
-        //unbindService(myConnection)
+        unbindService(myConnection)
     }
 }

@@ -16,6 +16,7 @@ import com.testingviews.R.drawable.*
 import com.testingviews.databinding.ActivityMainBinding
 import com.testingviews.home.HomeFragment
 import com.testingviews.player.AudioService
+import com.testingviews.player.SingleItemFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_now_playing.*
 import timber.log.Timber
@@ -41,7 +42,8 @@ class MainActivity : AppCompatActivity() {
                     item.isChecked = true
                 }
                 R.id.nav_favorites -> {
-
+                    replaceFragment(SingleItemFragment())
+                    item.isChecked = true
                 }
                 R.id.nav_search -> {
                     replaceFragment(SearchFragment())

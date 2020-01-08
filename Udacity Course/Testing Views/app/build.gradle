@@ -24,7 +24,7 @@ android {
         }
     }
     packagingOptions {
-        pickFirst  'META-INF/*'
+        pickFirst 'META-INF/*'
     }
 
     dataBinding {

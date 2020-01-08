@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.testingviews.R.drawable.*
 import com.testingviews.databinding.ActivityMainBinding
+import com.testingviews.discover.DiscoverFragment
 import com.testingviews.home.HomeFragment
 import com.testingviews.player.AudioService
 import com.testingviews.player.SingleItemFragment
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                     item.isChecked = true
                 }
                 R.id.nav_search -> {
-                    replaceFragment(SearchFragment())
+                    replaceFragment(DiscoverFragment())
                     item.isChecked = true
                 }
             }

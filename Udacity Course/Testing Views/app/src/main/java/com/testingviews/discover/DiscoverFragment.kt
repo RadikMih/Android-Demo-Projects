@@ -41,12 +41,11 @@ class DiscoverFragment : Fragment() {
         recyclerView = view.findViewById(R.id.discover_recycler_view)
         recyclerView.apply {
             overScrollMode = View.OVER_SCROLL_NEVER
-//            layoutManager = GridLayoutManager(activity, 2)
-            adapter = ListItemAdapter(items)
+           layoutManager = GridLayoutManager(activity, 2)
+            adapter = DiscoverAdapter(items)
         }
 
     }
-
 
     val items = listOf(
         Data("Test 1", R.drawable.ic_launcher_background),

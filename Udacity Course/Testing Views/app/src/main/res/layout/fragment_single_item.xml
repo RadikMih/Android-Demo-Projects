@@ -18,42 +18,41 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="10dp"
             android:src="@drawable/ic_launcher_background"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/station_name_text" />
 
         <TextView
             android:id="@+id/station_name_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:text="Radio Swiss Jazz"
             android:textAlignment="center"
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/station_logo_image_view"
-            app:layout_constraintStart_toStartOf="@+id/station_logo_image_view"
-            app:layout_constraintTop_toBottomOf="@+id/station_logo_image_view" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/now_playing_label_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="16dp"
             android:text="Currently playing:"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/station_logo_image_view"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/station_logo_image_view" />
 
         <TextView
             android:id="@+id/currently_playing_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="2dp"
             android:layout_marginEnd="16dp"
             android:text="Show name long enough to be"
             android:textSize="18sp"
@@ -66,25 +65,23 @@
             android:id="@+id/currently_playing_name2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="16dp"
             android:text="Show name long enough to be"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/next_up_label"
-            app:layout_constraintTop_toBottomOf="@+id/next_up_label" />
+            app:layout_constraintStart_toEndOf="@+id/next_up_label"
+            app:layout_constraintTop_toTopOf="@+id/next_up_label" />
 
         <TextView
             android:id="@+id/now_playing_duration"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
             android:text="05:43-05:47"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/currently_playing_name"
             app:layout_constraintTop_toBottomOf="@+id/currently_playing_name" />
 
@@ -94,8 +91,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Artist:"
-            app:layout_constraintStart_toStartOf="@+id/now_playing_duration"
-            app:layout_constraintTop_toBottomOf="@+id/now_playing_duration" />
+            app:layout_constraintStart_toStartOf="@+id/station_logo_image_view"
+            app:layout_constraintTop_toBottomOf="@+id/station_logo_image_view" />
 
         <TextView
             android:id="@+id/artist_name"
@@ -164,14 +161,13 @@
             android:id="@+id/station_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:text="All California Rock is a celebration of the magic and the music that makes California great! If its from, about, or made in California, it's on All California Rock. Founded by major market California radio programmers and record… All California Rock is a celebration of the magic and the music that makes California great! If its from, about, or made in California, it's on All California Rock. Founded by major market California radio programmers and record…. "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/next_up_label"
             app:layout_constraintTop_toBottomOf="@+id/currently_playing_name2" />
 
 

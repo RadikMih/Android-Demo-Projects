@@ -6,8 +6,10 @@ import android.net.Uri
 import android.os.Binder
 import android.os.IBinder
 import android.support.v4.media.session.MediaSessionCompat
+import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
@@ -42,23 +44,25 @@ class AudioService : Service() {
 
 //        audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
 //        val trackSelector = DefaultTrackSelector()
-
+        val audioAttributes: AudioAttributes = AudioAttributes.Builder()
+            .setUsage(C.USAGE_MEDIA)
+            .setContentType(C.CONTENT_TYPE_MUSIC)
+            .build()
 //
 //        mediaSession?.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS or MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS)
 //        val bandwidthMeter = DefaultBandwidthMeter()
 //        val trackSelectionFactory =
 //            AdaptiveTrackSelection.Factory(bandwidthMeter)
 //        val trackSelector = DefaultTrackSelector(trackSelectionFactory)
-        //exoPlayer = ExoPlayerFactory.newSimpleInstance(applicationContext, trackSelector)
+
         Timber.i("onCreate")
         mediaSession = MediaSessionCompat(this, javaClass.simpleName)
         mediaSession?.isActive = true
 
         notificationManager = MediaNotificationManager(this)
 
-
         exoPlayer = ExoPlayerFactory.newSimpleInstance(applicationContext)
-        // exoPlayer?.addListener(this)  // , Player.EventListener
+
 
         dataSourceFactory = DefaultDataSourceFactory(
             applicationContext,
@@ -67,7 +71,11 @@ class AudioService : Service() {
 
         mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
             .createMediaSource(mediaUri)
-        exoPlayer?.prepare(mediaSource)
+        exoPlayer?.apply {
+            setAudioAttributes(audioAttributes, true)
+            prepare(mediaSource)
+
+        }
 
         status = PlaybackStatus.IDLE
     }

@@ -1,6 +1,7 @@
 package com.testingviews.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.testingviews.R
 import com.testingviews.databinding.FragmentHomeBinding
-import java.lang.Exception
+import timber.log.Timber
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), ClickListener {
 
     private lateinit var viewModel: MainViewModel
-
+    lateinit var selectedItem: Data
 
     lateinit var recyclerView: RecyclerView
 
@@ -28,34 +29,30 @@ class HomeFragment : Fragment() {
             ViewModelProviders.of(this)[MainViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
 
-        viewModel.selected.observe(this, Observer<Data> { item ->
-            item.title //example
-        })
-
-        retainInstance = true
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-
-
 
         recyclerView = view.findViewById(R.id.parent_recycler_view)
         recyclerView.apply {
             overScrollMode = View.OVER_SCROLL_NEVER
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-            adapter = CategoryAdapter(categories)
+            adapter = CategoryAdapter(categories, this@HomeFragment)
         }
 
+//        viewModel.selected.observe(viewLifecycleOwner, Observer<Data> { item ->
+//            selectedItem = item
+//            println("item clicked")
+//        })
     }
 
 
 //    companion object {
 //        fun newInstance(): HomeFragment = HomeFragment()
 //    }
-
 
 
     override fun onCreateView(
@@ -129,5 +126,17 @@ class HomeFragment : Fragment() {
         ParentData("Favorites", items)
     )
 
+    override fun onClick(data: Data) {
+        Log.e("TAG", "item clicked" + data.stream)
+
+    }
+
+//    inner class Listener : View.OnClickListener {
+//        override fun onClick(v: View?) {
+//            val itemPosition: Int = recyclerView.indexOfChild(v)
+//            Timber.i("item clicked")
+//        }
+//    }
 
 }
+

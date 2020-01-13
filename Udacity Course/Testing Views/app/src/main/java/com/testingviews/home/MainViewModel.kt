@@ -14,6 +14,7 @@ class MainViewModel : ViewModel() {
 
     fun select(item: Data) {
         selected.value = item
+
     }
 
 }

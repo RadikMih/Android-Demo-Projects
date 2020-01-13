@@ -1,14 +1,18 @@
 package com.testingviews.home
 
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.testingviews.R
 import kotlinx.android.synthetic.main.layout_content_list_item.view.*
 
-class ListItemAdapter(private var items: List<Data>) :
+
+class ListItemAdapter(private var items: List<Data>, private var clickListener: ClickListener) :
     RecyclerView.Adapter<ListItemAdapter.ListItemViewHolder>() {
 
 
@@ -22,7 +26,7 @@ class ListItemAdapter(private var items: List<Data>) :
 
     override fun onBindViewHolder(holder: ListItemViewHolder, position: Int) {
         val data: Data = items[position]
-        holder.bind(data)
+        holder.bind(data, clickListener)
     }
 
     fun submitList(list: List<Data>) {
@@ -37,12 +41,27 @@ class ListItemAdapter(private var items: List<Data>) :
                 false
             )
         ) {
+
+
+        val layout = itemView.list_item_parent_layout
         val name: TextView = itemView.tv_station_name
         val image: ImageView = itemView.iv_station_logo
+        var link: String = ""
 
-        fun bind(data: Data) {
+
+        fun bind(data: Data, listener: ClickListener) {
             name.text = data.title
             image.setImageResource(data.image)
+            link = data.stream
+
+            layout.setOnClickListener {
+                listener.onClick(data)
+            }
         }
     }
+
+}
+
+interface ClickListener{
+    fun onClick(data: Data)
 }

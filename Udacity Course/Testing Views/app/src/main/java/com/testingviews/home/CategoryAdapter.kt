@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.testingviews.R
 import kotlinx.android.synthetic.main.layout_row_list.view.*
+import timber.log.Timber
 
-class CategoryAdapter(var categories: List<ParentData>) :
+class CategoryAdapter(var categories: List<ParentData>, private var listener: ClickListener) :
     RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     val viewPool = RecyclerView.RecycledViewPool()
@@ -20,6 +21,7 @@ class CategoryAdapter(var categories: List<ParentData>) :
         val view = LayoutInflater
             .from(parent.context)
             .inflate(R.layout.layout_row_list, parent, false)
+
 
         return CategoryViewHolder(view)
     }
@@ -47,9 +49,10 @@ class CategoryAdapter(var categories: List<ParentData>) :
             recyclerView.apply {
                 layoutManager = childLayoutManager
                 overScrollMode = View.OVER_SCROLL_NEVER
-                adapter = ListItemAdapter(category.children)
+                adapter = ListItemAdapter(category.children, listener)
                 setRecycledViewPool(viewPool)
             }
         }
     }
+
 }

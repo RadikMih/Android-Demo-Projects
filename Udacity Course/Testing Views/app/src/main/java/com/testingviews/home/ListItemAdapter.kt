@@ -1,12 +1,9 @@
 package com.testingviews.home
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.testingviews.R
 import kotlinx.android.synthetic.main.layout_content_list_item.view.*
@@ -62,6 +59,6 @@ class ListItemAdapter(private var items: List<Data>, private var clickListener: 
 
 }
 
-interface ClickListener{
+interface ClickListener {
     fun onClick(data: Data)
 }

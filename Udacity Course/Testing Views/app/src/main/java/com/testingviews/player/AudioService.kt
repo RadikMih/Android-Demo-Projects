@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Binder
 import android.os.IBinder
 import android.support.v4.media.session.MediaSessionCompat
+import androidx.lifecycle.Observer
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -14,7 +15,9 @@ import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
+import com.testingviews.home.Data
 import timber.log.Timber
+import java.net.URI
 
 
 //private const val RADIO_URL = "https://fm4shoutcast.sf.apa.at/;"
@@ -33,27 +36,30 @@ class AudioService : Service() {
     private var notificationManager: MediaNotificationManager? = null
     private var status: String? = null
 
+
     //    private var audioManager: AudioManager? = null
     //    private val streamUri: String? = null
     //    private var wifiLock: WifiLock? = null
 
-    private val mediaUri: Uri = Uri.parse("https://fm4shoutcast.sf.apa.at/;")
+    private var mediaUri: Uri = Uri.parse("https://fm4shoutcast.sf.apa.at/;")
 
     override fun onCreate() {
         super.onCreate()
 
 //        audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
 //        val trackSelector = DefaultTrackSelector()
-        val audioAttributes: AudioAttributes = AudioAttributes.Builder()
-            .setUsage(C.USAGE_MEDIA)
-            .setContentType(C.CONTENT_TYPE_MUSIC)
-            .build()
+
 //
 //        mediaSession?.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS or MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS)
 //        val bandwidthMeter = DefaultBandwidthMeter()
 //        val trackSelectionFactory =
 //            AdaptiveTrackSelection.Factory(bandwidthMeter)
 //        val trackSelector = DefaultTrackSelector(trackSelectionFactory)
+
+
+
+
+
 
         Timber.i("onCreate")
         mediaSession = MediaSessionCompat(this, javaClass.simpleName)
@@ -63,22 +69,11 @@ class AudioService : Service() {
 
         exoPlayer = ExoPlayerFactory.newSimpleInstance(applicationContext)
 
-
-        dataSourceFactory = DefaultDataSourceFactory(
-            applicationContext,
-            Util.getUserAgent(applicationContext, "Radio Project")
-        )
-
-        mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
-            .createMediaSource(mediaUri)
-        exoPlayer?.apply {
-            setAudioAttributes(audioAttributes, true)
-            prepare(mediaSource)
-
-        }
+        prepareMediaSource()
 
         status = PlaybackStatus.IDLE
     }
+
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Timber.i("onStartCommand")
@@ -90,8 +85,28 @@ class AudioService : Service() {
         super.onTaskRemoved(rootIntent)
     }
 
+    private fun prepareMediaSource() {
+        val audioAttributes: AudioAttributes = AudioAttributes.Builder()
+            .setUsage(C.USAGE_MEDIA)
+            .setContentType(C.CONTENT_TYPE_MUSIC)
+            .build()
 
-    fun play() {
+        dataSourceFactory = DefaultDataSourceFactory(
+            applicationContext,
+            Util.getUserAgent(applicationContext, "Radio Project")
+        )
+
+        mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
+            .createMediaSource(mediaUri)
+        exoPlayer?.apply {
+            setAudioAttributes(audioAttributes, true)
+            prepare(mediaSource)
+        }
+    }
+
+    fun play(url: String) {
+        setMediaUrl(url)
+        prepareMediaSource()
         exoPlayer?.playWhenReady = true
         notificationManager?.startNotify()
     }
@@ -142,5 +157,8 @@ class AudioService : Service() {
         return exoPlayer?.playWhenReady
     }
 
-
+    fun setMediaUrl(link: String): Uri {
+        mediaUri = Uri.parse(link)
+        return mediaUri
+    }
 }

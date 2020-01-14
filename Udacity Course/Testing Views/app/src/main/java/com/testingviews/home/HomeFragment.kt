@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.testingviews.R
 import com.testingviews.databinding.FragmentHomeBinding
-import timber.log.Timber
 
 
 class HomeFragment : Fragment(), ClickListener {
 
     private lateinit var viewModel: MainViewModel
     lateinit var selectedItem: Data
+    private var selectedStream: String? = null
 
     lateinit var recyclerView: RecyclerView
 
@@ -30,7 +30,6 @@ class HomeFragment : Fragment(), ClickListener {
         } ?: throw Exception("Invalid Activity")
 
     }
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -73,6 +72,13 @@ class HomeFragment : Fragment(), ClickListener {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+    override fun onClick(data: Data) {
+        viewModel.select(data)
+
+        Log.e("TAG", "item clicked" + data.stream)
+
+    }
+
 
     // ================ DATA =================================
 
@@ -80,7 +86,7 @@ class HomeFragment : Fragment(), ClickListener {
         Data(
             "BBC - Radio 1",
             R.drawable.ic_launcher_background,
-            "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p"
+            "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p.m3u"
         ),
         Data(
             "BBC - Radio 2",
@@ -117,7 +123,12 @@ class HomeFragment : Fragment(), ClickListener {
             R.drawable.ic_launcher_background,
             "http://bbcwssc.ic.llnwd.net/stream/bbcwssc_mp1_ws-eieuk"
         ),
-        Data("FM 4", R.drawable.ic_launcher_background, "https://fm4shoutcast.sf.apa.at/;")
+        Data("FM 4", R.drawable.ic_launcher_background, "https://fm4shoutcast.sf.apa.at/;"),
+        Data(
+            "Veselina",
+            R.drawable.ic_launcher_background,
+            "https://bss.neterra.tv/rtplive/veselinaradio_live.stream/playlist.m3u8"
+        )
     )
 
     val categories = arrayListOf(
@@ -125,18 +136,5 @@ class HomeFragment : Fragment(), ClickListener {
         ParentData("Discover", items),
         ParentData("Favorites", items)
     )
-
-    override fun onClick(data: Data) {
-        Log.e("TAG", "item clicked" + data.stream)
-
-    }
-
-//    inner class Listener : View.OnClickListener {
-//        override fun onClick(v: View?) {
-//            val itemPosition: Int = recyclerView.indexOfChild(v)
-//            Timber.i("item clicked")
-//        }
-//    }
-
 }
 

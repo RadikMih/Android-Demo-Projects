@@ -11,20 +11,27 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.testingviews.R.drawable.*
 import com.testingviews.databinding.ActivityMainBinding
 import com.testingviews.discover.DiscoverFragment
+import com.testingviews.home.Data
 import com.testingviews.home.HomeFragment
+import com.testingviews.home.MainViewModel
 import com.testingviews.player.AudioService
 import com.testingviews.player.SingleItemFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_now_playing.*
 import timber.log.Timber
+import java.util.stream.BaseStream
 
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var viewModel: MainViewModel
+    private lateinit var selectedStream: String
     private lateinit var binding: ActivityMainBinding
     var isPlaying = false
 
@@ -60,6 +67,9 @@ class MainActivity : AppCompatActivity() {
         Timber.i("onCreate")
         //binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        // Get the ViewModel.
+        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+
         bottom_navigation.setOnNavigationItemSelectedListener(bottomNavigationItemListener)
         replaceFragment(HomeFragment())
         playPauseButton = play_pause_button
@@ -68,23 +78,35 @@ class MainActivity : AppCompatActivity() {
         isPlaying = false
         var isLiked = false
 
+        val uriObserver = Observer<Data> { data ->
+            selectedStream = data.stream
+
+//            selectedStream?.let {
+//                audioService?.play(it)
+//            }
+            play(selectedStream)
+        }
+        viewModel.selected.observe(this, uriObserver)
+
         if (savedInstanceState != null) {
             isPlaying = savedInstanceState.get("state") as Boolean
-            changePlayPause(isPlaying, playPauseButton)
+            //      changePlayPause(isPlaying, playPauseButton)
         }
 
 
         playPauseButton.setOnClickListener {
             isPlaying = !isPlaying
-            changePlayPause(isPlaying, it)
+          changePlayPause(selectedStream)
         }
 
         likeDislikeButton.setOnClickListener {
             isLiked = !isLiked
             changeLikeDislike(isLiked, it)
         }
+
         val intent = Intent(this, AudioService::class.java)
         startService(intent)
+
     }
 
     private val myConnection = object : ServiceConnection {
@@ -92,7 +114,7 @@ class MainActivity : AppCompatActivity() {
             val binder = service as AudioService.LocalBinder
             audioService = binder.getService()
             isBound = true
-            changePlayPause(isPlaying, playPauseButton) // class
+            //   changePlayPause(isPlaying, playPauseButton) // class
         }
 
         override fun onServiceDisconnected(name: ComponentName) {
@@ -100,17 +122,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun changePlayPause(isPlaying: Boolean, it: View) {
+    fun play(stream: String) {
+        if (!isPlaying) {
+        isPlaying = true
+        }
+        changePlayPause(stream)
+    }
+
+    private fun changePlayPause(newStream: String) {
         val resId: Int
         if (isPlaying) {
             resId = ic_pause_circle_outline
-            audioService?.play()
+           audioService?.play(newStream)
         } else {
             resId = ic_play_circle_outline
             audioService?.stop()
 
         }
-        it.background = ContextCompat.getDrawable(this, resId)
+        playPauseButton.background = ContextCompat.getDrawable(this, resId)
     }
 
     private fun changeLikeDislike(isLiked: Boolean, it: View) {

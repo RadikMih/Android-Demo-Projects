@@ -25,7 +25,6 @@ import com.testingviews.player.SingleItemFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_now_playing.*
 import timber.log.Timber
-import java.util.stream.BaseStream
 
 
 class MainActivity : AppCompatActivity() {
@@ -41,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
     var audioService: AudioService? = null
     var isBound = false
-    //  private val uri: Uri = Uri.parse("https://fm4shoutcast.sf.apa.at/;")
+
     private val bottomNavigationItemListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -80,23 +79,18 @@ class MainActivity : AppCompatActivity() {
 
         val uriObserver = Observer<Data> { data ->
             selectedStream = data.stream
-
-//            selectedStream?.let {
-//                audioService?.play(it)
-//            }
             play(selectedStream)
         }
         viewModel.selected.observe(this, uriObserver)
 
         if (savedInstanceState != null) {
             isPlaying = savedInstanceState.get("state") as Boolean
-            //      changePlayPause(isPlaying, playPauseButton)
         }
 
 
         playPauseButton.setOnClickListener {
             isPlaying = !isPlaying
-          changePlayPause(selectedStream)
+            changePlayPause(selectedStream)
         }
 
         likeDislikeButton.setOnClickListener {
@@ -124,7 +118,7 @@ class MainActivity : AppCompatActivity() {
 
     fun play(stream: String) {
         if (!isPlaying) {
-        isPlaying = true
+            isPlaying = true
         }
         changePlayPause(stream)
     }
@@ -133,7 +127,7 @@ class MainActivity : AppCompatActivity() {
         val resId: Int
         if (isPlaying) {
             resId = ic_pause_circle_outline
-           audioService?.play(newStream)
+            audioService?.play(newStream)
         } else {
             resId = ic_play_circle_outline
             audioService?.stop()

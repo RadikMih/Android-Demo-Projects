@@ -21,7 +21,6 @@ class DiscoverFragment : Fragment() {
             DiscoverFragment()
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
@@ -44,7 +43,6 @@ class DiscoverFragment : Fragment() {
            layoutManager = GridLayoutManager(activity, 2)
             adapter = DiscoverAdapter(items)
         }
-
     }
 
     val items = listOf(
@@ -90,5 +88,4 @@ class DiscoverFragment : Fragment() {
         ),
         Data("FM 4", R.drawable.ic_launcher_background, "https://fm4shoutcast.sf.apa.at/;")
     )
-
 }

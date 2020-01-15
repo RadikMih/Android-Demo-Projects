@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,7 +29,6 @@ class HomeFragment : Fragment(), ClickListener {
         } ?: throw Exception("Invalid Activity")
 
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -79,14 +77,12 @@ class HomeFragment : Fragment(), ClickListener {
 
     }
 
-
     // ================ DATA =================================
-
     val items = listOf(
         Data(
             "BBC - Radio 1",
             R.drawable.ic_launcher_background,
-            "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p.m3u"
+            "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p"
         ),
         Data(
             "BBC - Radio 2",
@@ -123,12 +119,7 @@ class HomeFragment : Fragment(), ClickListener {
             R.drawable.ic_launcher_background,
             "http://bbcwssc.ic.llnwd.net/stream/bbcwssc_mp1_ws-eieuk"
         ),
-        Data("FM 4", R.drawable.ic_launcher_background, "https://fm4shoutcast.sf.apa.at/;"),
-        Data(
-            "Veselina",
-            R.drawable.ic_launcher_background,
-            "https://bss.neterra.tv/rtplive/veselinaradio_live.stream/playlist.m3u8"
-        )
+        Data("FM 4", R.drawable.ic_launcher_background, "https://fm4shoutcast.sf.apa.at/;")
     )
 
     val categories = arrayListOf(

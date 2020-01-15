@@ -50,10 +50,8 @@ dependencies {
 
 
     implementation 'com.google.android.material:material:1.0.0'
-
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.10.1'
     implementation 'javax.xml.stream:stax-api:1.0'
-
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
     implementation "com.google.android.exoplayer:exoplayer-core:2.10.6"
@@ -67,5 +65,4 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
-
 }

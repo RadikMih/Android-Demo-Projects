@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.IBinder
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -37,6 +38,8 @@ class MainActivity : AppCompatActivity() {
     // consider data binding
     private lateinit var likeDislikeButton: Button
     lateinit var playPauseButton: Button
+    lateinit var nowPlayingTitle: TextView
+
 
     var audioService: AudioService? = null
     var isBound = false
@@ -73,12 +76,18 @@ class MainActivity : AppCompatActivity() {
         replaceFragment(HomeFragment())
         playPauseButton = play_pause_button
         likeDislikeButton = like_dislike_button
+        nowPlayingTitle = now_playing_title
+        val nowPlayingInclude = now_playing_include
 
         isPlaying = false
         var isLiked = false
 
         val uriObserver = Observer<Data> { data ->
             selectedStream = data.stream
+            nowPlayingTitle.text = data.title
+            if (nowPlayingInclude.visibility == View.GONE) {
+                nowPlayingInclude.visibility = View.VISIBLE
+            }
             play(selectedStream)
         }
         viewModel.selected.observe(this, uriObserver)

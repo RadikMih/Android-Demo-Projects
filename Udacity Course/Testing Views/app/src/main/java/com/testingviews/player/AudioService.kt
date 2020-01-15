@@ -32,24 +32,18 @@ class AudioService : Service() {
     private val iBinder: IBinder = LocalBinder()
     private var exoPlayer: SimpleExoPlayer? = null
     private lateinit var mediaSource: MediaSource
-    private var hlsMediaSource: ExtractorMediaSource? = null
-
     private var dataSourceFactory: DefaultDataSourceFactory? = null
-    private var dataSourceFactoryHLS: DefaultHttpDataSourceFactory? = null
     private var mediaSession: MediaSessionCompat? = null
     private var notificationManager: MediaNotificationManager? = null
     private var status: String? = null
-
+    private var mediaUri: Uri = Uri.parse("https://fm4shoutcast.sf.apa.at/;")
 
     //    private var audioManager: AudioManager? = null
     //    private val streamUri: String? = null
     //    private var wifiLock: WifiLock? = null
 
-    private var mediaUri: Uri = Uri.parse("https://fm4shoutcast.sf.apa.at/;")
-
     override fun onCreate() {
         super.onCreate()
-
 //        audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
 //        mediaSession?.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS or MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS)
 
@@ -58,7 +52,6 @@ class AudioService : Service() {
         val trackSelector = DefaultTrackSelector(trackSelectionFactory)
 
 
-        Timber.i("onCreate")
         mediaSession = MediaSessionCompat(this, javaClass.simpleName)
         mediaSession?.isActive = true
 
@@ -67,6 +60,7 @@ class AudioService : Service() {
 
         prepareMediaSource()
         status = PlaybackStatus.IDLE
+        Timber.i("onCreate")
     }
 
 

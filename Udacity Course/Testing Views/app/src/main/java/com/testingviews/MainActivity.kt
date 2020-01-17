@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity() {
         nowPlayingTitle = now_playing_title
         val nowPlayingInclude = now_playing_include
 
+
         isPlaying = false
         var isLiked = false
 
@@ -96,7 +97,6 @@ class MainActivity : AppCompatActivity() {
             isPlaying = savedInstanceState.get("state") as Boolean
         }
 
-
         playPauseButton.setOnClickListener {
             isPlaying = !isPlaying
             changePlayPause(selectedStream)
@@ -109,7 +109,6 @@ class MainActivity : AppCompatActivity() {
 
         val intent = Intent(this, AudioService::class.java)
         startService(intent)
-
     }
 
     private val myConnection = object : ServiceConnection {
@@ -133,15 +132,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun changePlayPause(newStream: String) {
-        val resId: Int
         if (isPlaying) {
-            resId = ic_pause_circle_outline
             audioService?.play(newStream)
         } else {
-            resId = ic_play_circle_outline
-            audioService?.stop()
-
+            audioService?.pause()
         }
+        changePlayPauseButtons(isPlaying)
+    }
+
+    private fun changePlayPauseButtons(state: Boolean) {
+        val resId: Int = if (state) ic_pause_circle_outline else ic_play_circle_outline
+        Timber.i("%s", resId)
         playPauseButton.background = ContextCompat.getDrawable(this, resId)
     }
 
@@ -176,12 +177,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        Timber.i("onResume")
+        Timber.i("onResume ")
+
     }
 
     override fun onRestart() {
         super.onRestart()
         Timber.i("onRestart")
+        changePlayPauseButtons(audioService?.getStatus()!!)
     }
 
     override fun onDestroy() {

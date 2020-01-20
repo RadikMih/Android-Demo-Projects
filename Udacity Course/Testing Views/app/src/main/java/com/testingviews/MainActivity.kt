@@ -39,6 +39,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var likeDislikeButton: Button
     lateinit var playPauseButton: Button
     lateinit var nowPlayingTitle: TextView
+    private lateinit var sendDataIntent: Intent
+    private lateinit var mainActivityData: Data
 
 
     var audioService: AudioService? = null
@@ -71,6 +73,9 @@ class MainActivity : AppCompatActivity() {
 
         // Get the ViewModel.
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+       // mainActivityData = Data("Title", R.drawable.ic_discover_genre, "https://fm4shoutcast.sf.apa.at/;")
+        //sendDataIntent = Intent(application, AudioService::class.java)
+        sendDataIntent = Intent(this, AudioService::class.java)
 
         bottom_navigation.setOnNavigationItemSelectedListener(bottomNavigationItemListener)
         replaceFragment(HomeFragment())
@@ -89,17 +94,22 @@ class MainActivity : AppCompatActivity() {
             if (nowPlayingInclude.visibility == View.GONE) {
                 nowPlayingInclude.visibility = View.VISIBLE
             }
-            play(selectedStream)
+            sendDataIntent.action = audioService?.ACTION_PLAY
+            mainActivityData = data
+            play(mainActivityData)
         }
         viewModel.selected.observe(this, uriObserver)
 
         if (savedInstanceState != null) {
             isPlaying = savedInstanceState.get("state") as Boolean
+//            if(selectedStream == null) {
+//                selectedStream = savedInstanceState.get("stream") as String
+//            }
         }
 
         playPauseButton.setOnClickListener {
             isPlaying = !isPlaying
-            changePlayPause(selectedStream)
+            changePlayPause(mainActivityData)
         }
 
         likeDislikeButton.setOnClickListener {
@@ -107,8 +117,7 @@ class MainActivity : AppCompatActivity() {
             changeLikeDislike(isLiked, it)
         }
 
-        val intent = Intent(this, AudioService::class.java)
-        startService(intent)
+        startService(sendDataIntent)
     }
 
     private val myConnection = object : ServiceConnection {
@@ -124,16 +133,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun play(stream: String) {
+    fun play(data: Data) {
         if (!isPlaying) {
             isPlaying = true
         }
-        changePlayPause(stream)
+        changePlayPause(data)
     }
 
-    private fun changePlayPause(newStream: String) {
+    private fun changePlayPause(data: Data) {
         if (isPlaying) {
-            audioService?.play(newStream)
+            audioService?.play(data)
         } else {
             audioService?.pause()
         }
@@ -161,6 +170,7 @@ class MainActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         Timber.i("SAVED")
         outState.putBoolean("state", isPlaying)
+       // outState.putString("stream", selectedStream)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -178,13 +188,13 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         Timber.i("onResume ")
-
+        audioService?.getStatus()?.let { changePlayPauseButtons(it) }
     }
 
     override fun onRestart() {
         super.onRestart()
         Timber.i("onRestart")
-        changePlayPauseButtons(audioService?.getStatus()!!)
+       // audioService?.getStatus()?.let { changePlayPauseButtons(it) }
     }
 
     override fun onDestroy() {

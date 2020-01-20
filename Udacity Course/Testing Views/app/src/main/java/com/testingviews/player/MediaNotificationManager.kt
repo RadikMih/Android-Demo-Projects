@@ -7,11 +7,17 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
+import android.view.View
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.lifecycle.Observer
+import com.testingviews.MainActivity
 import com.testingviews.R
+import com.testingviews.home.Data
+import timber.log.Timber
 
 
 const val PRIMARY_CHANNEL = "PRIMARY_CHANNEL_ID"
@@ -23,22 +29,33 @@ class MediaNotificationManager(service: AudioService) {
     private var audioService: AudioService? = null
     private var notificationManager: NotificationManagerCompat? = null
     private var resources: Resources? = null
+  //  private var largeIcon: Bitmap
+    private var imageId: Int = 0
+    var title: String
+
 
     init {
         notificationManager = NotificationManagerCompat.from(service)
         audioService = service
         resources = service.resources
+       //var largeIcon = BitmapFactory.decodeResource(resources, R.drawable.ic_discover_genre)
+        title = "Title"
     }
 
-    fun startNotify() { // playbackStatus: String
-        val largeIcon = BitmapFactory.decodeResource(resources, R.drawable.ic_discover_genre)
+    fun startNotify(playbackStatus: String, data: Data) {
+            Timber.i("image = %s", data.image)
+        //    largeIcon = BitmapFactory.decodeResource(resources, data.image)
+            imageId = data.image
+            title = data.title
+        var largeIcon = BitmapFactory.decodeResource(resources, imageId, null)
+
         var icon: Int = R.drawable.ic_pause
 
         val playbackAction = Intent(audioService, AudioService::class.java)
         playbackAction.action = audioService?.ACTION_PAUSE
         var action: PendingIntent = PendingIntent.getService(audioService, 1, playbackAction, 0)
 
-        if (audioService?.getStatus()!!) {
+        if (playbackStatus == PlaybackStatus.PAUSED) {
             icon = R.drawable.ic_play_arrow
             playbackAction.action = audioService?.ACTION_PLAY
             action = PendingIntent.getService(audioService, 2, playbackAction, 0)
@@ -48,7 +65,7 @@ class MediaNotificationManager(service: AudioService) {
         stopIntent.action = audioService?.ACTION_STOP
         val stopAction: PendingIntent = PendingIntent.getService(audioService, 3, stopIntent, 0)
 
-        val intent = Intent(audioService, AudioService::class.java)
+        val intent = Intent(audioService, MainActivity::class.java)
         intent.action = Intent.ACTION_MAIN
         intent.addCategory(Intent.CATEGORY_LAUNCHER)
         val pendingIntent: PendingIntent = PendingIntent.getActivity(audioService, 0, intent, 0)
@@ -72,12 +89,11 @@ class MediaNotificationManager(service: AudioService) {
             manager.createNotificationChannel(channel)
         }
 
-
         val builder: Notification? = audioService?.let {
             NotificationCompat.Builder(it, PRIMARY_CHANNEL)
                 .setAutoCancel(false)
-                .setContentTitle("Title")
-                .setContentText("Text")
+                .setContentTitle(title)
+                .setContentText("Now playing")
                 .setLargeIcon(largeIcon)
                 .setContentIntent(pendingIntent)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)

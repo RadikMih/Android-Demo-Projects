@@ -24,7 +24,7 @@ import com.testingviews.home.Data
 import timber.log.Timber
 
 
-class AudioService : Service() {  //,   AudioManager.OnAudioFocusChangeListener Player.EventListener
+class AudioService : Service() {
     val ACTION_PLAY = "ACTION_PLAY"
     val ACTION_PAUSE = "ACTION_PAUSE"
     val ACTION_STOP = "ACTION_STOP"
@@ -39,36 +39,20 @@ class AudioService : Service() {  //,   AudioManager.OnAudioFocusChangeListener 
     private lateinit var audioServiceData: Data
     private var streamUri: String = "https://fm4shoutcast.sf.apa.at/;"
 
-    //  private var audioManager: AudioManager? = null
-    // private var mediaUri: Uri = Uri.parse(streamUri)
-    // lateinit var focusRequest: AudioFocusRequest
-    //    private var wifiLock: WifiLock? = null
-//    var result: Int? = audioManager?.requestAudioFocus(
-//        this, AudioManager.STREAM_MUSIC,
-//        AudioManager.AUDIOFOCUS_GAIN
-//    )
-
     override fun onCreate() {
         super.onCreate()
-        // audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
-
-        //mediaSession?.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS or MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS)
 
         val trackSelectionFactory = AdaptiveTrackSelection.Factory()
         val trackSelector = DefaultTrackSelector(trackSelectionFactory)
 
         mediaSession = MediaSessionCompat(this, javaClass.simpleName)
         mediaSession?.isActive = true
-
         notificationManager = MediaNotificationManager(this)
         exoPlayer = ExoPlayerFactory.newSimpleInstance(applicationContext, trackSelector)
         audioServiceData = Data("Title", R.drawable.ic_discover_genre, streamUri)
-
         prepareMediaSource()
         status = PlaybackStatus.IDLE
         Timber.i("onCreate")
-
-
         // Monitor ExoPlayer events.
         exoPlayer?.addListener(PlayerEventListener())
     }
@@ -92,7 +76,7 @@ class AudioService : Service() {  //,   AudioManager.OnAudioFocusChangeListener 
                 play(audioServiceData)
             }
             action.equals(ACTION_PAUSE, ignoreCase = true) -> {
-                pause() // update player status to show the correct button
+                pause()
             }
             action.equals(ACTION_STOP, ignoreCase = true) -> {
                 stop()
@@ -188,20 +172,6 @@ class AudioService : Service() {  //,   AudioManager.OnAudioFocusChangeListener 
     private fun setMediaUrl(link: String): Uri {
         return Uri.parse(link)
     }
-
-//    override fun onAudioFocusChange(focusChange: Int) {
-//        when (focusChange) {
-//            AudioManager.AUDIOFOCUS_GAIN -> {
-//                if (exoPlayer?.volume != 1f) {
-//                    exoPlayer?.volume = 1f
-//                }
-//                play(audioServiceData)
-//            }
-//            AudioManager.AUDIOFOCUS_LOSS -> stop()
-//            AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> pause()
-//            AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> exoPlayer?.volume = 0.7f
-//        }
-//    }
 
     private inner class PlayerEventListener : Player.EventListener {
         override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {

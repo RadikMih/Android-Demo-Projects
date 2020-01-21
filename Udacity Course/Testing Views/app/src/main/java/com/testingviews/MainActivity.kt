@@ -3,7 +3,6 @@ package com.testingviews
 import android.content.*
 import android.os.Bundle
 import android.os.IBinder
-import android.os.Parcelable
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -15,7 +14,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.testingviews.R.drawable.*
-import com.testingviews.databinding.ActivityMainBinding
 import com.testingviews.discover.DiscoverFragment
 import com.testingviews.home.Data
 import com.testingviews.home.HomeFragment
@@ -31,10 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var selectedStream: String
-    private lateinit var binding: ActivityMainBinding
     var isPlaying = false
-
-    // consider data binding
     private lateinit var likeDislikeButton: Button
     lateinit var playPauseButton: Button
     lateinit var nowPlayingTitle: TextView
@@ -42,46 +37,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainActivityData: Data
     var audioService: AudioService? = null
 
-
-
-    private val bottomNavigationItemListener =
-        BottomNavigationView.OnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_home -> {
-                    replaceFragment(HomeFragment())
-                    item.isChecked = true
-                }
-                R.id.nav_favorites -> {
-                    replaceFragment(SingleItemFragment())
-                    item.isChecked = true
-                }
-                R.id.nav_search -> {
-                    replaceFragment(DiscoverFragment())
-                    item.isChecked = true
-                }
-            }
-            false
-        }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Timber.i("onCreate")
-        //binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        // Get the ViewModel.
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        // mainActivityData = Data("Title", R.drawable.ic_discover_genre, "https://fm4shoutcast.sf.apa.at/;")
-        //sendDataIntent = Intent(application, AudioService::class.java)
         sendDataIntent = Intent(this, AudioService::class.java)
-
         bottom_navigation.setOnNavigationItemSelectedListener(bottomNavigationItemListener)
         replaceFragment(HomeFragment())
         playPauseButton = play_pause_button
         likeDislikeButton = like_dislike_button
         nowPlayingTitle = now_playing_title
         val nowPlayingInclude = now_playing_include
-
 
         isPlaying = false
         var isLiked = false
@@ -100,16 +68,8 @@ class MainActivity : AppCompatActivity() {
         viewModel.selected.observe(this, uriObserver)
 
         LocalBroadcastManager.getInstance(this).registerReceiver(
-            mMessageReceiver,  IntentFilter("PLAY")
+            mMessageReceiver, IntentFilter("PLAY")
         )
-
-
-//        if (savedInstanceState != null) {
-//            isPlaying = savedInstanceState.get("state") as Boolean
-////            if(selectedStream == null) {
-////                selectedStream = savedInstanceState.get("stream") as String
-////            }
-//        }
 
         playPauseButton.setOnClickListener {
             isPlaying = !isPlaying
@@ -120,30 +80,34 @@ class MainActivity : AppCompatActivity() {
             isLiked = !isLiked
             changeLikeDislike(isLiked, it)
         }
-
         startService(sendDataIntent)
     }
 
-    private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent) { // Get extra data included in the Intent
-            val state = intent.getBooleanExtra("STATE", isPlaying)
-            changePlayPauseButtons(state)
-        }
+    override fun onStart() {
+        super.onStart()
+        Timber.i("onStart")
+        val intent = Intent(this, AudioService::class.java)
+        bindService(intent, myConnection, Context.BIND_AUTO_CREATE)
     }
 
-    private val myConnection = object : ServiceConnection {
-        override fun onServiceConnected(className: ComponentName, service: IBinder) {
-            val binder = service as AudioService.LocalBinder
-            audioService = binder.getService()
-            //   changePlayPause(isPlaying, playPauseButton) // class
-        }
-
-        override fun onServiceDisconnected(name: ComponentName) {
-            audioService = null
-        }
+    override fun onResume() {
+        super.onResume()
+        Timber.i("onResume ")
+        audioService?.getStatus()?.let { changePlayPauseButtons(it) }
     }
 
-    fun play(data: Data) {
+    override fun onRestart() {
+        super.onRestart()
+        Timber.i("onRestart")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Timber.i("onDestroy")
+        unbindService(myConnection)
+    }
+
+    private fun play(data: Data) {
         if (!isPlaying) {
             isPlaying = true
         }
@@ -176,40 +140,40 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)
-//        Timber.i("SAVED")
-//        outState.putBoolean("state", isPlaying)
-//       // outState.putString("stream", selectedStream)
-//    }
-
-//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-//        super.onRestoreInstanceState(savedInstanceState)
-//        // called after onStart
-//    }
-
-    override fun onStart() {
-        super.onStart()
-        Timber.i("onStart")
-        val intent = Intent(this, AudioService::class.java)
-        bindService(intent, myConnection, Context.BIND_AUTO_CREATE)
+    private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            val state = intent.getBooleanExtra("STATE", isPlaying)
+            changePlayPauseButtons(state)
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
-        Timber.i("onResume ")
-        audioService?.getStatus()?.let { changePlayPauseButtons(it) }
+    private val myConnection = object : ServiceConnection {
+        override fun onServiceConnected(className: ComponentName, service: IBinder) {
+            val binder = service as AudioService.LocalBinder
+            audioService = binder.getService()
+        }
+
+        override fun onServiceDisconnected(name: ComponentName) {
+            audioService = null
+        }
     }
 
-    override fun onRestart() {
-        super.onRestart()
-        Timber.i("onRestart")
-        // audioService?.getStatus()?.let { changePlayPauseButtons(it) }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Timber.i("onDestroy")
-        unbindService(myConnection)
-    }
+    private val bottomNavigationItemListener =
+        BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    replaceFragment(HomeFragment())
+                    item.isChecked = true
+                }
+                R.id.nav_favorites -> {
+                    replaceFragment(SingleItemFragment())
+                    item.isChecked = true
+                }
+                R.id.nav_search -> {
+                    replaceFragment(DiscoverFragment())
+                    item.isChecked = true
+                }
+            }
+            false
+        }
 }

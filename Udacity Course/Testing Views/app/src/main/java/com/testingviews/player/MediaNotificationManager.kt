@@ -62,7 +62,7 @@ class MediaNotificationManager(service: AudioService) {
     }
 
     fun startNotify(playbackStatus: String, data: Data) {
-            Timber.i("image = %s", data.image)
+         //   Timber.i("image = %s", data.image)
         //    largeIcon = BitmapFactory.decodeResource(resources, data.image)
             imageId = data.image
             title = data.title

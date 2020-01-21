@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.testingviews.R
 import com.testingviews.home.Data
+import com.testingviews.home.HomeFragment
 import com.testingviews.home.ListItemAdapter
 
 class DiscoverFragment : Fragment() {
@@ -41,7 +42,7 @@ class DiscoverFragment : Fragment() {
         recyclerView.apply {
             overScrollMode = View.OVER_SCROLL_NEVER
            layoutManager = GridLayoutManager(activity, 2)
-            adapter = DiscoverAdapter(items)
+            adapter = DiscoverAdapter(items) // HomeFragment().categories()
         }
     }
 

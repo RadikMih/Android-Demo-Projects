@@ -4,8 +4,6 @@ import android.content.*
 import android.os.Bundle
 import android.os.IBinder
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -30,9 +28,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
     private lateinit var selectedStream: String
     var isPlaying = false
-    private lateinit var likeDislikeButton: Button
-    lateinit var playPauseButton: Button
-    lateinit var nowPlayingTitle: TextView
     private lateinit var sendDataIntent: Intent
     private lateinit var mainActivityData: Data
     var audioService: AudioService? = null
@@ -46,42 +41,37 @@ class MainActivity : AppCompatActivity() {
         sendDataIntent = Intent(this, AudioService::class.java)
         bottom_navigation.setOnNavigationItemSelectedListener(bottomNavigationItemListener)
         replaceFragment(HomeFragment())
-        playPauseButton = play_pause_button
-        likeDislikeButton = like_dislike_button
-        nowPlayingTitle = now_playing_title
-        val nowPlayingInclude = now_playing_include
 
         isPlaying = false
         var isLiked = false
 
         val uriObserver = Observer<Data> { data ->
             selectedStream = data.stream
-            nowPlayingTitle.text = data.title
-            if (nowPlayingInclude.visibility == View.GONE) {
-                nowPlayingInclude.visibility = View.VISIBLE
+            now_playing_title.text = data.title
+            if (now_playing_include.visibility == View.GONE) {
+                now_playing_include.visibility = View.VISIBLE
             }
             sendDataIntent.action = audioService?.ACTION_PLAY
             mainActivityData = data
             play(mainActivityData)
         }
-
         viewModel.selected.observe(this, uriObserver)
 
         LocalBroadcastManager.getInstance(this).registerReceiver(
             mMessageReceiver, IntentFilter("PLAY")
         )
 
-        playPauseButton.setOnClickListener {
+        play_pause_button.setOnClickListener {
             isPlaying = !isPlaying
             changePlayPause(mainActivityData)
         }
 
-        likeDislikeButton.setOnClickListener {
+        like_dislike_button.setOnClickListener {
             isLiked = !isLiked
             changeLikeDislike(isLiked, it)
         }
 
-        nowPlayingTitle.setOnClickListener {
+        now_playing_title.setOnClickListener {
             replaceFragment(SingleItemFragment())
         }
 
@@ -131,7 +121,7 @@ class MainActivity : AppCompatActivity() {
     private fun changePlayPauseButtons(state: Boolean) {
         val resId: Int = if (state) ic_pause_circle_outline else ic_play_circle_outline
         Timber.i("%s", resId)
-        playPauseButton.background = ContextCompat.getDrawable(this, resId)
+        play_pause_button.background = ContextCompat.getDrawable(this, resId)
     }
 
     private fun changeLikeDislike(isLiked: Boolean, it: View) {

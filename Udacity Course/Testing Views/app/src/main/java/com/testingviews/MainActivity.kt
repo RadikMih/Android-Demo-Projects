@@ -80,6 +80,11 @@ class MainActivity : AppCompatActivity() {
             isLiked = !isLiked
             changeLikeDislike(isLiked, it)
         }
+
+        nowPlayingTitle.setOnClickListener {
+            replaceFragment(SingleItemFragment())
+        }
+
         startService(sendDataIntent)
     }
 

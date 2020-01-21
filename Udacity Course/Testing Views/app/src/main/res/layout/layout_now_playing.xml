@@ -30,7 +30,6 @@
         android:layout_width="wrap_content"
         android:layout_height="36dp"
         android:gravity="center_horizontal|center_vertical"
-        android:text="FM 4"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

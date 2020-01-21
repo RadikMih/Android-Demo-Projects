@@ -2,12 +2,12 @@ package com.testingviews.player
 
 import android.app.Service
 import android.content.Intent
-import android.media.AudioManager
 import android.net.Uri
 import android.os.Binder
 import android.os.IBinder
 import android.support.v4.media.session.MediaSessionCompat
 import android.text.TextUtils
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.Player
@@ -23,11 +23,11 @@ import com.testingviews.R
 import com.testingviews.home.Data
 import timber.log.Timber
 
-class AudioService : Service(), Player.EventListener {  //, AudioManager.OnAudioFocusChangeListener
+
+class AudioService : Service() {  //,   AudioManager.OnAudioFocusChangeListener Player.EventListener
     val ACTION_PLAY = "ACTION_PLAY"
     val ACTION_PAUSE = "ACTION_PAUSE"
     val ACTION_STOP = "ACTION_STOP"
-
 
     private val iBinder: IBinder = LocalBinder()
     private var exoPlayer: SimpleExoPlayer? = null
@@ -37,11 +37,10 @@ class AudioService : Service(), Player.EventListener {  //, AudioManager.OnAudio
     private var notificationManager: MediaNotificationManager? = null
     private lateinit var status: String
     private lateinit var audioServiceData: Data
-
-    private var audioManager: AudioManager? = null
     private var streamUri: String = "https://fm4shoutcast.sf.apa.at/;"
-    private var mediaUri: Uri = Uri.parse(streamUri)
 
+    //  private var audioManager: AudioManager? = null
+    // private var mediaUri: Uri = Uri.parse(streamUri)
     // lateinit var focusRequest: AudioFocusRequest
     //    private var wifiLock: WifiLock? = null
 //    var result: Int? = audioManager?.requestAudioFocus(
@@ -63,17 +62,25 @@ class AudioService : Service(), Player.EventListener {  //, AudioManager.OnAudio
 
         notificationManager = MediaNotificationManager(this)
         exoPlayer = ExoPlayerFactory.newSimpleInstance(applicationContext, trackSelector)
-
-      //  audioServiceData = Data("Title", R.drawable.ic_discover_genre, streamUri)
+        audioServiceData = Data("Title", R.drawable.ic_discover_genre, streamUri)
 
         prepareMediaSource()
         status = PlaybackStatus.IDLE
         Timber.i("onCreate")
+
+
+        // Monitor ExoPlayer events.
+        exoPlayer?.addListener(PlayerEventListener())
+    }
+
+    private fun sendMessageToActivity(state: Boolean) {
+        val intent = Intent("PLAY")
+        intent.putExtra("STATE", state)
+        LocalBroadcastManager.getInstance(application).sendBroadcast(intent)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Timber.i("onStartCommand")
-
         val action = intent?.action
         Timber.i("action = $action")
         if (TextUtils.isEmpty(action)) {
@@ -121,8 +128,8 @@ class AudioService : Service(), Player.EventListener {  //, AudioManager.OnAudio
 
     fun play(data: Data) {
         audioServiceData = data
-        streamUri = data.stream
-        setMediaUrl(audioServiceData.stream)
+        streamUri = audioServiceData.stream
+        setMediaUrl(streamUri)
         prepareMediaSource()
         exoPlayer?.playWhenReady = true
         status = PlaybackStatus.PLAYING
@@ -188,7 +195,7 @@ class AudioService : Service(), Player.EventListener {  //, AudioManager.OnAudio
 //                if (exoPlayer?.volume != 1f) {
 //                    exoPlayer?.volume = 1f
 //                }
-//                play(streamUri)
+//                play(audioServiceData)
 //            }
 //            AudioManager.AUDIOFOCUS_LOSS -> stop()
 //            AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> pause()
@@ -196,15 +203,21 @@ class AudioService : Service(), Player.EventListener {  //, AudioManager.OnAudio
 //        }
 //    }
 
-    override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-        status = when (playbackState) {
-            Player.STATE_BUFFERING -> PlaybackStatus.LOADING
-            Player.STATE_ENDED -> PlaybackStatus.STOPPED
-            Player.STATE_IDLE -> PlaybackStatus.IDLE
-            Player.STATE_READY -> if (playWhenReady) PlaybackStatus.PLAYING else PlaybackStatus.PAUSED
-            else -> PlaybackStatus.IDLE
-        }
-        if (status != PlaybackStatus.IDLE) notificationManager?.startNotify(status, audioServiceData)
+    private inner class PlayerEventListener : Player.EventListener {
+        override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
+            status = when (playbackState) {
+                Player.STATE_BUFFERING -> PlaybackStatus.LOADING
+                Player.STATE_ENDED -> PlaybackStatus.STOPPED
+                Player.STATE_IDLE -> PlaybackStatus.IDLE
+                Player.STATE_READY -> if (playWhenReady) PlaybackStatus.PLAYING else PlaybackStatus.PAUSED
+                else -> PlaybackStatus.IDLE
+            }
 
+            sendMessageToActivity(getStatus()!!)
+            if (status != PlaybackStatus.IDLE) {
+                notificationManager?.startNotify(status, audioServiceData)
+            }
+        }
     }
 }
+

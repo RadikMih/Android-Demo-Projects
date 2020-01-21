@@ -9,10 +9,16 @@ import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.view.View
+import androidx.annotation.DrawableRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.Observer
 import com.testingviews.MainActivity
 import com.testingviews.R
@@ -42,12 +48,30 @@ class MediaNotificationManager(service: AudioService) {
         title = "Title"
     }
 
+    private fun getBitmapFromVectorDrawable(context: Context, @DrawableRes drawableId: Int): Bitmap? {
+        return ContextCompat.getDrawable(context, drawableId)?.let {
+            val drawable = DrawableCompat.wrap(it).mutate()
+
+            val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(bitmap)
+            drawable.setBounds(0, 0, canvas.width, canvas.height)
+            drawable.draw(canvas)
+
+            bitmap
+        }
+    }
+
     fun startNotify(playbackStatus: String, data: Data) {
             Timber.i("image = %s", data.image)
         //    largeIcon = BitmapFactory.decodeResource(resources, data.image)
             imageId = data.image
             title = data.title
-        var largeIcon = BitmapFactory.decodeResource(resources, imageId, null)
+
+
+      //  var largeIcon = BitmapFactory.decodeResource(resources, imageId, null)
+
+
+        var largeIcon = audioService?.let { getBitmapFromVectorDrawable(it, imageId) }
 
         var icon: Int = R.drawable.ic_pause
 

@@ -81,7 +81,7 @@ class HomeFragment : Fragment(), ClickListener {
     val items = listOf(
         Data(
             "BBC - Radio 1",
-            R.drawable.ic_launcher_background,
+            R.drawable.vd_sed_icon,
             "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p"
         ),
         Data(

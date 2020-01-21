@@ -1,15 +1,16 @@
 package com.testingviews.player
 
 object PlaybackStatus {
-   val IDLE = "PlaybackStatus_IDLE"
 
-    val LOADING = "PlaybackStatus_LOADING"
+    const val IDLE: String = "PlaybackStatus_IDLE"
 
-    val PLAYING = "PlaybackStatus_PLAYING"
+    const val LOADING: String = "PlaybackStatus_LOADING"
 
-    val PAUSED = "PlaybackStatus_PAUSED"
+    const val PLAYING: String = "PlaybackStatus_PLAYING"
 
-    val STOPPED = "PlaybackStatus_STOPPED"
+    const val PAUSED: String = "PlaybackStatus_PAUSED"
 
-    val ERROR = "PlaybackStatus_ERROR"
+    const val STOPPED: String = "PlaybackStatus_STOPPED"
+
+    const val ERROR: String = "PlaybackStatus_ERROR"
 }

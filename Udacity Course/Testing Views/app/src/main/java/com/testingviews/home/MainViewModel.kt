@@ -16,6 +16,8 @@ class MainViewModel : ViewModel() {
         get() = _selected
 
     fun select(item: Data) {
-        _selected.value = item
+        if (item != _selected.value) {
+            _selected.value = item
+        }
     }
 }

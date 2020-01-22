@@ -19,7 +19,7 @@ import timber.log.Timber
 class DiscoverFragment : Fragment(), ClickListener {
 
     private lateinit var viewModel: MainViewModel
-    lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView: RecyclerView
 
     companion object {
         fun newInstance(): DiscoverFragment =

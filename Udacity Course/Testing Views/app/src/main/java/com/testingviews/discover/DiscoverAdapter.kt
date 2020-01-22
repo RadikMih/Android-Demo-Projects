@@ -9,17 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.testingviews.R
 import com.testingviews.home.ClickListener
 import com.testingviews.home.Data
-import kotlinx.android.synthetic.main.layout_content_list_item.view.*
-import kotlinx.android.synthetic.main.layout_content_list_item.view.iv_station_logo
-import kotlinx.android.synthetic.main.layout_content_list_item.view.tv_station_name
 import kotlinx.android.synthetic.main.layout_discover_single_item.view.*
 
 class DiscoverAdapter(private var items: List<Data>, private var clickListener: ClickListener) :
     RecyclerView.Adapter<DiscoverAdapter.DiscoverViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DiscoverViewHolder {
-
         val inflater = LayoutInflater.from(parent.context)
         return DiscoverViewHolder(inflater, parent)
     }
@@ -58,7 +53,5 @@ class DiscoverAdapter(private var items: List<Data>, private var clickListener: 
                 listener.onClick(data)
             }
         }
-
-
     }
 }

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.testingviews.R
 import kotlinx.android.synthetic.main.layout_content_list_item.view.*
@@ -39,8 +40,7 @@ class ListItemAdapter(private var items: List<Data>, private var clickListener: 
             )
         ) {
 
-
-        val layout = itemView.list_item_parent_layout
+        val layout: ConstraintLayout = itemView.list_item_parent_layout
         val name: TextView = itemView.tv_station_name
         val image: ImageView = itemView.iv_station_logo
         var link: String = ""
@@ -57,8 +57,4 @@ class ListItemAdapter(private var items: List<Data>, private var clickListener: 
         }
     }
 
-}
-
-interface ClickListener {
-    fun onClick(data: Data)
 }

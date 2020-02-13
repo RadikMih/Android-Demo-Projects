@@ -27,6 +27,7 @@ class SearchFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val spinner: Spinner = spinner
+
         spinner.adapter = ArrayAdapter<String>(
             context!!,
             R.layout.layout_spinner_row,
@@ -34,6 +35,5 @@ class SearchFragment: Fragment() {
         ).also {
            it.setDropDownViewResource(R.layout.layout_spinner_dropdown)
         }
-
     }
 }

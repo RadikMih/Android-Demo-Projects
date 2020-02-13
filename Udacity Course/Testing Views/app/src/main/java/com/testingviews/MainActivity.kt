@@ -19,6 +19,7 @@ import com.testingviews.home.MainViewModel
 import com.testingviews.player.AudioService
 import com.testingviews.player.SingleItemFragment
 import com.testingviews.search.SearchFragment
+import com.testingviews.test.BlankFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_now_playing.*
 import timber.log.Timber
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         sendDataIntent = Intent(this, AudioService::class.java)
         bottom_navigation.setOnNavigationItemSelectedListener(bottomNavigationItemListener)
-        replaceFragment(SearchFragment())
+        replaceFragment(BlankFragment())
 
         isPlaying = false
         var isLiked = false

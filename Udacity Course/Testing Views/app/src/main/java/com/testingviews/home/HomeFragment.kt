@@ -122,7 +122,7 @@ class HomeFragment : Fragment(), ClickListener {
         Data("FM 4", R.drawable.ic_launcher_background, "https://fm4shoutcast.sf.apa.at/;")
     )
 
-    val categories = arrayListOf(
+    val categories = listOf(
         ParentData("Recently played", items),
         ParentData("Discover", items),
         ParentData("Favorites", items)

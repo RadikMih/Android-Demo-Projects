@@ -9,42 +9,98 @@
 
 
     <Button
-        android:id="@+id/buutonTest"
+        android:id="@+id/buttonTest"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="8dp"
-        android:background="@android:color/holo_orange_dark"
+        android:width="20dp"
+        android:backgroundTint="@android:color/holo_orange_dark"
         android:drawableStart="@drawable/ic_favorite"
-        android:drawableEnd="@drawable/ic_arrow_right"
+        android:drawableEnd="@drawable/ic_favorite"
         android:gravity="center_horizontal|center_vertical"
-        android:paddingStart="10dp"
-        android:paddingTop="18dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="18dp"
+        android:paddingStart="20dp"
+        android:paddingTop="15dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="15dp"
         android:text="Long Text here"
-
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintCircleRadius="20dp"
+        app:layout_constraintCircleRadius="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonTest1"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        android:drawableStart="@drawable/ic_favorite"
+        android:gravity="center_horizontal|center_vertical"
+        android:paddingStart="27dp"
+        android:paddingEnd="0dp"
+        app:layout_constraintEnd_toStartOf="@+id/buttonTest2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonTest4"
+        app:layout_constraintTop_toBottomOf="@+id/buttonTest" />
+
+    <Button
+        android:id="@+id/buttonTest2"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:drawableStart="@drawable/ic_favorite"
+        android:gravity="center_horizontal|center_vertical"
+        android:paddingStart="27dp"
+        android:paddingEnd="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonTest1"
+        app:layout_constraintTop_toTopOf="@+id/buttonTest1" />
+
+    <Button
+        android:id="@+id/buttonTest3"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:drawableStart="@drawable/ic_favorite"
+        android:gravity="center_horizontal|center_vertical"
+        android:paddingStart="27dp"
+        android:paddingEnd="0dp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/buttonTest4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/buttonTest1" />
+
+    <Button
+        android:id="@+id/buttonTest4"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:drawableStart="@drawable/ic_favorite"
+        android:gravity="center_horizontal|center_vertical"
+        android:paddingStart="27dp"
+        android:paddingEnd="0dp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/buttonTest1"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonTest3"
+        app:layout_constraintTop_toTopOf="@+id/buttonTest1" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/questMapLinearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="14dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintCircleRadius="10dp"
         android:background="@android:color/holo_orange_dark"
+        app:layout_constraintCircleRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buutonTest">
+        app:layout_constraintTop_toBottomOf="@+id/buttonTest1">
 
         <ImageView
             android:id="@+id/iv_questMapIcon"
@@ -80,9 +136,7 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/material"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -90,17 +144,18 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:backgroundTint="@android:color/holo_orange_dark"
-        app:cornerRadius="20dp"
-        app:drawableStart="@drawable/ic_favorite"
-        android:drawableEnd="@drawable/ic_arrow_right"
         android:gravity="center_horizontal|center_vertical"
+
         android:paddingStart="10dp"
+
         android:paddingTop="18dp"
         android:paddingEnd="10dp"
         android:paddingBottom="18dp"
         android:text="Long Text here"
         android:textColor="@color/white"
         android:textSize="18sp"
+        app:cornerRadius="10dp"
+        app:icon="@drawable/ic_favorite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

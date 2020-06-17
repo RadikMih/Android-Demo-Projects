@@ -57,7 +57,7 @@ class OverviewViewModel : ViewModel() {
 
             } catch (t: Throwable) {
                 _status.value = MarsApiStatus.ERROR
-                _properties.value = ArrayList()
+                _properties.value = arrayListOf()
             }
         }
     }
